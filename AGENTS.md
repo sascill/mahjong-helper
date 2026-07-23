@@ -13,18 +13,16 @@
 작업을 시작하기 전에 해당 작업과 관련된 문서를 먼저 확인한다.
 
 ```text
+docs/README.md
 docs/product-spec.md
-docs/recommendation-spec.md
-docs/yaku-spec.md
 docs/technical-spec.md
-docs/test-scenarios.md
+작업 경로에서 가장 가까운 Spec.md
 ```
 
+- 전체 문서와 모듈 경로는 `docs/README.md`를 따른다.
 - 제품 기능과 범위는 `product-spec.md`를 따른다.
-- 추천 거리와 순위는 `recommendation-spec.md`를 따른다.
-- 역의 성립 조건은 `yaku-spec.md`를 따른다.
 - 기술 구조와 개발 도구는 `technical-spec.md`를 따른다.
-- 주요 입력과 기대 결과는 `test-scenarios.md`를 따른다.
+- 모듈의 인터페이스, 동작과 테스트 기준은 해당 구현 경로의 `Spec.md`를 따른다.
 - 관련 스펙이 없거나 불명확하면 구현 전에 스펙부터 작성하거나 사용자에게 확인한다.
 - 서로 다른 문서가 충돌하면 임의로 판단하지 않고 충돌 내용을 보고한다.
 
@@ -64,7 +62,7 @@ docs/test-scenarios.md
 
 ### 4. 검증
 
-작업 완료 전에 `technical-spec.md`에 정의된 검증 명령을 실행한다.
+작업 완료 전에 `docs/technical-spec.md`에 정의된 검증 명령을 실행한다.
 
 최소 검증 대상은 다음과 같다.
 
@@ -98,9 +96,12 @@ docs/test-scenarios.md
 
 ## 문서 관리
 
-- 상세 스펙은 `docs/` 아래에서 관리한다.
+- 프로젝트 전체에 적용되는 제품·기술 스펙은 `docs/`에서 관리한다.
+- 도메인과 기능의 상세 스펙은 해당 구현 경로의 `Spec.md`에서 관리한다.
+- 동일한 스펙을 전역 문서와 모듈 스펙에 중복해서 작성하지 않는다.
+- 모듈을 추가·이동·삭제하면 `docs/README.md`의 설명과 경로를 함께 수정한다.
 - `README.md`에는 상세 기술 스펙이나 작업 상태를 기록하지 않는다.
-- 코드 동작이 변경되면 관련 스펙과 테스트 시나리오도 함께 갱신한다.
+- 코드 동작이 변경되면 가장 가까운 `Spec.md`와 관련 테스트를 함께 갱신한다.
 - 아직 확정되지 않은 내용을 확정된 요구사항처럼 작성하지 않는다.
 - 문서 본문과 모든 코드 주석은 한국어로 작성한다.
 - 코드 식별자와 파일명은 영어를 사용한다.
