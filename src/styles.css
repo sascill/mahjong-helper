@@ -53,3 +53,47 @@ select {
   font-weight: 700;
   letter-spacing: 0.08em;
 }
+
+.primary-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  margin-top: 24px;
+  padding: 0 20px;
+  border-radius: 6px;
+  background: #185c45;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.content-shell {
+  width: min(100%, 720px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+.page-header {
+  margin-bottom: 32px;
+}
+
+.page-header h1 {
+  margin: 8px 0 12px;
+  color: #202522;
+  font-size: clamp(1.75rem, 8vw, 2.5rem);
+}
+
+.page-header p {
+  margin: 0;
+  color: #69726d;
+  line-height: 1.6;
+}
+
+.page-header .eyebrow {
+  color: #185c45;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
