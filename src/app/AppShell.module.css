@@ -1,0 +1,104 @@
+.shell {
+  min-height: 100vh;
+  background:
+    linear-gradient(
+      180deg,
+      var(--color-primary-strong) 0,
+      var(--color-primary-strong) 64px,
+      var(--color-background) 64px
+    );
+}
+
+.header {
+  position: sticky;
+  z-index: 20;
+  top: 0;
+  border-bottom: 1px solid rgb(255 255 255 / 12%);
+  background: var(--color-primary-strong);
+}
+
+.headerInner,
+.navigationInner {
+  width: min(100%, var(--content-max-width));
+  margin: 0 auto;
+}
+
+.headerInner {
+  display: flex;
+  min-height: 64px;
+  align-items: center;
+  padding: 0 var(--space-4);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--color-on-primary);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+.brandMark {
+  display: inline-grid;
+  width: 32px;
+  height: 36px;
+  border: 1px solid #d8ded9;
+  border-bottom: 3px solid var(--color-gold);
+  border-radius: var(--radius-tile);
+  background: var(--color-surface);
+  color: var(--color-accent);
+  font-size: 1.35rem;
+  line-height: 1;
+  place-items: center;
+}
+
+.content {
+  min-height: calc(100vh - 64px);
+  padding-bottom: calc(76px + env(safe-area-inset-bottom));
+}
+
+.navigation {
+  position: fixed;
+  z-index: 30;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-top: 1px solid var(--color-border);
+  background: rgb(255 255 255 / 96%);
+  box-shadow: 0 -8px 24px rgb(0 45 28 / 8%);
+  backdrop-filter: blur(12px);
+}
+
+.navigationInner {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4)
+    calc(var(--space-2) + env(safe-area-inset-bottom));
+}
+
+.navigationLink {
+  display: grid;
+  min-height: 52px;
+  align-content: center;
+  justify-items: center;
+  gap: 2px;
+  border-radius: var(--radius-control);
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.navigationIcon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.navigationLinkActive {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-strong);
+}

@@ -18,6 +18,12 @@
 
 - 문서: [technical-spec.md](./technical-spec.md)
 
+### 디자인 스펙
+
+공통 시각 언어, 디자인 토큰, 레이아웃과 UI 원칙을 정의한다.
+
+- 문서: [design-spec.md](./design-spec.md)
+
 ## 도메인
 
 ### 손패
