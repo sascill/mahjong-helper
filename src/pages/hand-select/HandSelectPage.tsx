@@ -1,7 +1,19 @@
+import { useNavigate } from 'react-router'
+
+import type { HandInput } from '../../domain/mahjong/hand'
+import { useHandAnalysis } from '../../features/hand-analysis'
 import { HandSelection } from '../../features/hand-selection'
 import styles from './HandSelectPage.module.css'
 
 function HandSelectPage() {
+  const navigate = useNavigate()
+  const { analyze } = useHandAnalysis()
+
+  const handleAnalyze = (input: HandInput) => {
+    analyze(input)
+    navigate('/recommendations')
+  }
+
   return (
     <main className={styles.page}>
       <header className={styles.header}>
@@ -12,7 +24,7 @@ function HandSelectPage() {
         </p>
       </header>
 
-      <HandSelection onAnalyze={() => undefined} />
+      <HandSelection onAnalyze={handleAnalyze} />
     </main>
   )
 }

@@ -1,0 +1,206 @@
+.page {
+  width: min(100%, var(--content-max-width));
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4) var(--space-8);
+}
+
+.header {
+  margin-bottom: var(--space-6);
+}
+
+.eyebrow {
+  margin: 0 0 var(--space-2);
+  color: var(--color-accent);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.header h1 {
+  margin: 0;
+  color: var(--color-primary-strong);
+  font-size: clamp(1.75rem, 8vw, 2.5rem);
+  letter-spacing: -0.045em;
+  line-height: 1.15;
+}
+
+.description {
+  margin: var(--space-3) 0 0;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.handCard {
+  margin-bottom: var(--space-6);
+  padding: var(--space-4);
+  border: 1px solid #b9c7be;
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow: 0 4px 0 #d8ddd9;
+}
+
+.handCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.handCardHeader h2 {
+  margin: 0;
+  color: var(--color-primary-strong);
+  font-size: 1rem;
+}
+
+.tileCount {
+  color: var(--color-text-muted);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(38px, 1fr));
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border: 1px solid #0f4d37;
+  border-radius: var(--radius-control);
+  background: var(--color-primary-strong);
+  box-shadow: inset 0 2px 8px rgb(0 0 0 / 18%);
+}
+
+.tile {
+  display: grid;
+  min-width: 38px;
+  min-height: 46px;
+  border: 1px solid #d7ddd8;
+  border-bottom: 3px solid #adb7b0;
+  border-radius: var(--radius-tile);
+  background: var(--color-surface);
+  box-shadow: 0 2px 0 #c8cec9;
+  font-size: 1.5rem;
+  line-height: 1;
+  place-items: center;
+}
+
+.winds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.wind {
+  padding: var(--space-1) var(--space-3);
+  border-radius: 999px;
+  background: var(--color-surface-muted);
+  color: var(--color-text);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.resultSection {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.recommendationCard {
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-gold);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+}
+
+.recommendationMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.rank {
+  color: var(--color-accent);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.distance {
+  padding: var(--space-1) var(--space-2);
+  border-radius: 999px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary-strong);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.recommendationTitle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.recommendationTitle h2 {
+  margin: 0;
+  color: var(--color-primary-strong);
+  font-size: 1.5rem;
+  letter-spacing: -0.03em;
+}
+
+.han {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  font-weight: 800;
+}
+
+.reason {
+  margin: var(--space-3) 0 0;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.emptyResult {
+  padding: var(--space-8) var(--space-6);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  text-align: center;
+}
+
+.emptyResult p {
+  margin: 0;
+}
+
+.backLink {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--space-6);
+  padding: 0 var(--space-4);
+  border: 1px solid var(--color-border);
+  border-bottom: 3px solid #aeb7b1;
+  border-radius: var(--radius-control);
+  background: var(--color-surface);
+  color: var(--color-primary-strong);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+@media (min-width: 640px) {
+  .page {
+    padding-top: var(--space-8);
+  }
+
+  .handCard {
+    padding: var(--space-6);
+  }
+}
