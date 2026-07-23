@@ -1,0 +1,131 @@
+.form {
+  display: grid;
+  gap: 24px;
+}
+
+.section,
+.tileGroup {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.sectionHeader h2,
+.tileGroup legend {
+  margin: 0;
+  color: #202522;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.count {
+  color: #185c45;
+  font-weight: 700;
+}
+
+.selectedTiles,
+.tileGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
+  gap: 8px;
+}
+
+.selectedTiles {
+  min-height: 52px;
+}
+
+.emptyHand {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #69726d;
+  line-height: 52px;
+}
+
+.tileButton {
+  min-width: 44px;
+  min-height: 48px;
+  padding: 4px;
+  border: 1px solid #dfe4df;
+  border-radius: 6px;
+  background: #fff;
+  color: #202522;
+  cursor: pointer;
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.tileButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
+}
+
+.windFields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.windFields label {
+  display: grid;
+  gap: 6px;
+  color: #202522;
+  font-weight: 700;
+}
+
+.windFields select {
+  width: 100%;
+  min-height: 44px;
+  padding: 8px;
+  border: 1px solid #dfe4df;
+  border-radius: 6px;
+  background: #fff;
+  color: #202522;
+}
+
+.tileGroups {
+  display: grid;
+  gap: 20px;
+}
+
+.tileGroup legend {
+  margin-bottom: 8px;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 12px;
+}
+
+.actions button {
+  min-height: 48px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.resetButton {
+  border: 1px solid #dfe4df;
+  background: #fff;
+  color: #202522;
+}
+
+.analyzeButton {
+  border: 1px solid #185c45;
+  background: #185c45;
+  color: #fff;
+}
+
+.analyzeButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
