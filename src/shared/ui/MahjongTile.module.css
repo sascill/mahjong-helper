@@ -1,0 +1,13 @@
+.tile {
+  display: inline-grid;
+  min-width: 38px;
+  min-height: 46px;
+  border: 1px solid #d7ddd8;
+  border-bottom: 3px solid #adb7b0;
+  border-radius: var(--radius-tile);
+  background: var(--color-surface);
+  box-shadow: 0 2px 0 #c8cec9;
+  font-size: 1.5rem;
+  line-height: 1;
+  place-items: center;
+}

@@ -1,7 +1,10 @@
 import type { FormEvent } from 'react'
 
 import type { HandInput, Wind } from '../../domain/mahjong/hand'
-import { getTile, getTileLabel } from './lib/tilePresentation'
+import {
+  getTile,
+  getTileLabel,
+} from '../../shared/lib/tilePresentation'
 import {
   useHandSelection,
   type SelectedWind,
