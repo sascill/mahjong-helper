@@ -1,5 +1,6 @@
 .form {
   display: grid;
+  width: 100%;
   gap: 24px;
 }
 

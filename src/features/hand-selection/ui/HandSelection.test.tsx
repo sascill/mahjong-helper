@@ -1,4 +1,9 @@
-import { render, screen, within } from '@testing-library/react'
+import {
+  fireEvent,
+  render,
+  screen,
+  within,
+} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
@@ -20,17 +25,25 @@ const INITIAL_HAND_LABELS = [
   '4통',
 ]
 
-const addTiles = async (labels: string[]) => {
-  const user = userEvent.setup()
+const addTiles = (labels: string[]) => {
+  const tileButtons = new Map(
+    screen
+      .getAllByRole('button', { name: /추가$/ })
+      .map((button) => [button.getAttribute('aria-label'), button]),
+  )
 
   for (const label of labels) {
-    await user.click(screen.getByRole('button', { name: `${label} 추가` }))
-  }
+    const tileButton = tileButtons.get(`${label} 추가`)
 
-  return user
+    if (!tileButton) {
+      throw new Error(`${label} 패 버튼을 찾을 수 없습니다.`)
+    }
+
+    fireEvent.click(tileButton)
+  }
 }
 
-describe('손패 선택', () => {
+describe('손패 선택 기능', () => {
   it('초기 상태에 34종 패와 빈 손패를 표시한다', () => {
     render(<HandSelection onAnalyze={vi.fn()} />)
 
@@ -76,19 +89,19 @@ describe('손패 선택', () => {
     ).toHaveLength(4)
   })
 
-  it('전체 손패는 최대 13장까지만 선택한다', async () => {
+  it('전체 손패는 최대 13장까지만 선택한다', () => {
     render(<HandSelection onAnalyze={vi.fn()} />)
 
-    await addTiles(INITIAL_HAND_LABELS)
+    addTiles(INITIAL_HAND_LABELS)
 
     expect(screen.getByText('13 / 13')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: '5통 추가' })).toBeDisabled()
   })
 
-  it('선택한 손패를 도메인 순서로 정렬해서 표시한다', async () => {
+  it('선택한 손패를 도메인 순서로 정렬해서 표시한다', () => {
     render(<HandSelection onAnalyze={vi.fn()} />)
 
-    await addTiles(['중', '2삭', '1만', '동', '9통', '1만'])
+    addTiles(['중', '2삭', '1만', '동', '9통', '1만'])
 
     const selectedHand = screen.getByRole('region', {
       name: '선택한 손패',
@@ -131,26 +144,26 @@ describe('손패 선택', () => {
     expect(screen.getByRole('combobox', { name: '자풍' })).toHaveValue('')
   })
 
-  it('완성된 입력을 분석 콜백에 전달한다', async () => {
+  it('완성된 입력을 분석 콜백에 전달한다', () => {
     const onAnalyze = vi.fn()
 
     render(<HandSelection onAnalyze={onAnalyze} />)
 
-    const user = await addTiles(INITIAL_HAND_LABELS)
+    addTiles(INITIAL_HAND_LABELS)
     const analyzeButton = screen.getByRole('button', { name: '분석하기' })
 
     expect(analyzeButton).toBeDisabled()
 
-    await user.selectOptions(screen.getByRole('combobox', { name: '장풍' }), [
-      'east',
-    ])
-    await user.selectOptions(screen.getByRole('combobox', { name: '자풍' }), [
-      'south',
-    ])
+    fireEvent.change(screen.getByRole('combobox', { name: '장풍' }), {
+      target: { value: 'east' },
+    })
+    fireEvent.change(screen.getByRole('combobox', { name: '자풍' }), {
+      target: { value: 'south' },
+    })
 
     expect(analyzeButton).toBeEnabled()
 
-    await user.click(analyzeButton)
+    fireEvent.click(analyzeButton)
 
     expect(onAnalyze).toHaveBeenCalledWith({
       tiles: [
