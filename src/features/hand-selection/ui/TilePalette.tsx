@@ -4,7 +4,7 @@ import {
   type TileSuit,
 } from '../../../domain/mahjong/hand'
 import { getTileLabel } from '../lib/tilePresentation'
-import styles from './HandSelection.module.css'
+import styles from '../HandSelection.module.css'
 
 type TilePaletteProps = {
   canSelectTile: (tileId: TileId) => boolean

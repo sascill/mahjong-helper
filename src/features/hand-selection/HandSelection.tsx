@@ -1,13 +1,13 @@
 import type { FormEvent } from 'react'
 
-import type { HandInput, Wind } from '../../../domain/mahjong/hand'
-import { getTile, getTileLabel } from '../lib/tilePresentation'
+import type { HandInput, Wind } from '../../domain/mahjong/hand'
+import { getTile, getTileLabel } from './lib/tilePresentation'
 import {
   useHandSelection,
   type SelectedWind,
-} from '../model/useHandSelection'
+} from './model/useHandSelection'
 import styles from './HandSelection.module.css'
-import TilePalette from './TilePalette'
+import TilePalette from './ui/TilePalette'
 
 type HandSelectionProps = {
   onAnalyze: (input: HandInput) => void

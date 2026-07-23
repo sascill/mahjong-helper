@@ -7,7 +7,7 @@ import {
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
-import HandSelection from './HandSelection'
+import { HandSelection } from './index'
 
 const INITIAL_HAND_LABELS = [
   '1만',
