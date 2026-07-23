@@ -4,7 +4,7 @@
 
 Mahjong Helper의 기술 구성, 프로젝트 구조, 레이어 책임과 검증 방법을 정의한다.
 
-추천 엔진의 타입, 인터페이스와 계산 규칙은 `recommendation-spec.md`에서 정의한다.
+모듈별 타입, 인터페이스와 동작 규칙은 각 구현 경로의 `Spec.md`에서 정의한다.
 
 ## 기술 구성
 
@@ -38,14 +38,19 @@ src/
 │  └─ yaku-detail/
 ├─ features/
 │  ├─ hand-selection/
+│  │  └─ Spec.md
 │  ├─ hand-analysis/
+│  │  └─ Spec.md
 │  └─ yaku-catalog/
+│     └─ Spec.md
 ├─ domain/
 │  └─ mahjong/
-│     ├─ tile/
 │     ├─ hand/
+│     │  └─ Spec.md
 │     ├─ yaku/
+│     │  └─ Spec.md
 │     └─ recommendation/
+│        └─ Spec.md
 ├─ shared/
 │  └─ ui/
 ├─ test/
@@ -101,6 +106,15 @@ features
 - 기능 전용 컴포넌트와 훅을 최상위 공용 폴더로 이동하지 않는다.
 - 최상위 `components`, `hooks`, `utils` 폴더를 만들지 않는다.
 - 공용화는 실제 중복이 발생한 뒤 진행한다.
+
+## 스펙 배치
+
+- 프로젝트 전체의 제품·기술 스펙은 `docs/`에서 관리한다.
+- 도메인과 기능의 상세 스펙은 해당 구현 경로의 `Spec.md`에서 관리한다.
+- `Spec.md`에는 모듈의 인터페이스, 입력과 출력, 동작, 예외 조건과 테스트 기준을 작성한다.
+- 스펙, 테스트와 구현은 같은 작업 브랜치와 PR에서 함께 변경한다.
+- 동일한 내용을 전역 문서와 모듈 스펙에 중복해서 작성하지 않는다.
+- 전체 문서와 모듈 경로는 `docs/README.md`에서 확인한다.
 
 ## 화면 경로
 
