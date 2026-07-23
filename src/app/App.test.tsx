@@ -67,6 +67,9 @@ describe('애플리케이션 진입점', () => {
     expect(
       screen.getByRole('heading', { name: 'Mahjong Helper' }),
     ).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: '역 찾아보기' }),
+    ).toHaveAttribute('href', '/yaku')
   })
 
   it('공통 헤더와 주요 메뉴를 표시한다', () => {
@@ -88,6 +91,9 @@ describe('애플리케이션 진입점', () => {
     expect(
       within(navigation).getByRole('link', { name: '손패' }),
     ).toHaveAttribute('href', '/hand')
+    expect(
+      within(navigation).getByRole('link', { name: '역 도감' }),
+    ).toHaveAttribute('href', '/yaku')
   })
 
   it('홈 화면에서 손패 선택 화면으로 이동한다', async () => {
@@ -137,6 +143,21 @@ describe('애플리케이션 진입점', () => {
     expect(
       within(tanyao).getByText(/숫자패 2~8/),
     ).toBeInTheDocument()
+
+    fireEvent.click(
+      within(tanyao).getByRole('link', {
+        name: '탕야오 상세 보기',
+      }),
+    )
+
+    expect(
+      screen.getByRole('heading', { name: '탕야오', level: 1 }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(
+        '1·9·자패 없이 숫자패 2~8만으로 완성하는 역입니다.',
+      ),
+    ).toBeInTheDocument()
   })
 
   it('추천할 역이 없으면 빈 결과를 안내한다', () => {
@@ -166,6 +187,39 @@ describe('애플리케이션 진입점', () => {
 
     expect(
       screen.getByRole('heading', { name: '첫 손패를 선택하세요' }),
+    ).toBeInTheDocument()
+  })
+
+  it('분석 없이 역 목록과 상세를 탐색한다', () => {
+    render(
+      <MemoryRouter initialEntries={['/yaku']}>
+        <App />
+      </MemoryRouter>,
+    )
+
+    expect(
+      screen.getByRole('heading', { name: '역 도감', level: 1 }),
+    ).toBeInTheDocument()
+
+    fireEvent.click(
+      screen.getByRole('link', { name: '치또이츠 상세 보기' }),
+    )
+
+    expect(
+      screen.getByRole('heading', { name: '치또이츠', level: 1 }),
+    ).toBeInTheDocument()
+    expect(screen.getByText('멘젠 필수')).toBeInTheDocument()
+  })
+
+  it('존재하지 않는 역 ID는 역 목록으로 이동한다', () => {
+    render(
+      <MemoryRouter initialEntries={['/yaku/not-found']}>
+        <App />
+      </MemoryRouter>,
+    )
+
+    expect(
+      screen.getByRole('heading', { name: '역 도감', level: 1 }),
     ).toBeInTheDocument()
   })
 })

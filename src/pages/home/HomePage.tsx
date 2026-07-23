@@ -12,9 +12,14 @@ function HomePage() {
           첫 손패에서 목표로 삼을 역을 정하고, 게임은 직접
           플레이하세요.
         </p>
-        <Link className={styles.primaryLink} to="/hand">
-          첫 손패 분석하기
-        </Link>
+        <div className={styles.actions}>
+          <Link className={styles.primaryLink} to="/hand">
+            첫 손패 분석하기
+          </Link>
+          <Link className={styles.secondaryLink} to="/yaku">
+            역 찾아보기
+          </Link>
+        </div>
       </section>
 
       <section className={styles.guide} aria-labelledby="guide-title">

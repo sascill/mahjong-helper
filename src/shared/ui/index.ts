@@ -1,0 +1,1 @@
+export { MahjongTile } from './MahjongTile'

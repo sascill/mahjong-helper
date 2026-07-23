@@ -2,7 +2,7 @@ import {
   TILES,
   type Tile,
   type TileId,
-} from '../../../domain/mahjong/hand'
+} from '../../domain/mahjong/hand'
 
 const HONOR_LABELS: Record<string, string> = {
   east: '동',

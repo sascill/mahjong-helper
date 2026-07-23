@@ -3,7 +3,7 @@ import {
   type TileId,
   type TileSuit,
 } from '../../../domain/mahjong/hand'
-import { getTileLabel } from '../lib/tilePresentation'
+import { getTileLabel } from '../../../shared/lib/tilePresentation'
 import styles from '../HandSelection.module.css'
 
 type TilePaletteProps = {

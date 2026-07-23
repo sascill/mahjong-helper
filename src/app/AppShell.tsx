@@ -57,6 +57,17 @@ function AppShell({ children }: PropsWithChildren) {
             </span>
             손패
           </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              getNavigationClassName(isActive)
+            }
+            to="/yaku"
+          >
+            <span className={styles.navigationIcon} aria-hidden="true">
+              ▤
+            </span>
+            역 도감
+          </NavLink>
         </div>
       </nav>
     </div>
