@@ -3,13 +3,18 @@ import { Link } from 'react-router'
 import type { Yaku } from '../../../domain/mahjong/yaku'
 import { MahjongTile } from '../../../shared/ui'
 import styles from '../YakuCatalog.module.css'
+import {
+  canOpenYaku,
+  getDetailOpenValueLabel,
+  getPrimaryValueLabel,
+} from '../lib/yakuPresentation'
 
 type YakuDetailProps = {
   yaku: Yaku
 }
 
 export function YakuDetail({ yaku }: YakuDetailProps) {
-  const canOpen = yaku.han.open !== null
+  const canOpen = canOpenYaku(yaku)
 
   return (
     <>
@@ -29,10 +34,8 @@ export function YakuDetail({ yaku }: YakuDetailProps) {
       >
         <h2>판수와 조건</h2>
         <div className={styles.hanList}>
-          <span>멘젠 {yaku.han.closed}판</span>
-          <span>
-            {canOpen ? `울기 ${yaku.han.open}판` : '울기 불가'}
-          </span>
+          <span>{getPrimaryValueLabel(yaku)}</span>
+          <span>{getDetailOpenValueLabel(yaku)}</span>
         </div>
         <div className={styles.statusList}>
           <span>{canOpen ? '멘젠 필수 아님' : '멘젠 필수'}</span>

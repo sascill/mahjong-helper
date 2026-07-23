@@ -125,6 +125,7 @@ type HanValue = {
 type YakumanValue = {
   type: 'yakuman';
   open: boolean;
+  multiplier: 1;
 };
 
 type YakuValue = HanValue | YakumanValue;
@@ -135,7 +136,7 @@ type YakuValue = HanValue | YakumanValue;
 - 멘젠에서만 성립하는 일반 역은 `open`을 `null`로 정의한다.
 - 역만은 `YakumanValue`로 표현한다.
 - 멘젠에서만 성립하는 역만은 `open`을 `false`로 정의한다.
-- 모든 역만의 배수는 1로 취급한다.
+- 모든 역만의 `multiplier`는 1로 정의한다.
 - 룰 설정에 따른 판수 변경은 현재 범위에서 다루지 않는다.
 
 ## 완성 예시
