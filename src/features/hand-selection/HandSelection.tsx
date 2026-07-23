@@ -33,7 +33,10 @@ function HandSelection({ onAnalyze }: HandSelectionProps) {
 
   return (
     <form className={styles.form} onSubmit={analyze}>
-      <section className={styles.section} aria-label="선택한 손패">
+      <section
+        className={`${styles.section} ${styles.handSection}`}
+        aria-label="선택한 손패"
+      >
         <div className={styles.sectionHeader}>
           <h2>선택한 손패</h2>
           <output className={styles.count}>

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router'
 import { describe, expect, it } from 'vitest'
@@ -15,6 +15,27 @@ describe('애플리케이션 진입점', () => {
     expect(
       screen.getByRole('heading', { name: 'Mahjong Helper' }),
     ).toBeInTheDocument()
+  })
+
+  it('공통 헤더와 주요 메뉴를 표시한다', () => {
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>,
+    )
+
+    expect(screen.getByRole('banner')).toBeInTheDocument()
+
+    const navigation = screen.getByRole('navigation', {
+      name: '주요 메뉴',
+    })
+
+    expect(
+      within(navigation).getByRole('link', { name: '홈' }),
+    ).toHaveAttribute('href', '/')
+    expect(
+      within(navigation).getByRole('link', { name: '손패' }),
+    ).toHaveAttribute('href', '/hand')
   })
 
   it('홈 화면에서 손패 선택 화면으로 이동한다', async () => {
