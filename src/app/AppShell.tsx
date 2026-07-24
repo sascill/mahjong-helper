@@ -1,16 +1,34 @@
 import type { PropsWithChildren } from 'react'
-import { Link, NavLink, useMatch } from 'react-router'
+import { Link, NavLink, useLocation, useMatch } from 'react-router'
 
-import styles from "./AppShell.module.css";
+import styles from './AppShell.module.css'
 
 function getNavigationClassName(isActive: boolean) {
-  return [styles.navigationLink, isActive ? styles.navigationLinkActive : ""]
+  return [styles.navigationLink, isActive ? styles.navigationLinkActive : '']
     .filter(Boolean)
-    .join(" ");
+    .join(' ')
 }
 
 function AppShell({ children }: PropsWithChildren) {
   const isYakuDetail = useMatch('/yaku/:yakuId') !== null
+  const location = useLocation()
+  const isRecommendationDetail =
+    isYakuDetail &&
+    typeof location.state === 'object' &&
+    location.state !== null &&
+    'yakuDetailSource' in location.state &&
+    location.state.yakuDetailSource === 'recommendations'
+  const detailBackLink = isRecommendationDetail
+    ? {
+        to: '/recommendations',
+        label: '추천 결과',
+        ariaLabel: '추천 결과로',
+      }
+    : {
+        to: '/yaku',
+        label: '역 목록',
+        ariaLabel: '역 목록으로',
+      }
 
   return (
     <div className={styles.shell}>
@@ -22,11 +40,11 @@ function AppShell({ children }: PropsWithChildren) {
           {isYakuDetail && (
             <Link
               className={styles.headerBackLink}
-              to="/yaku"
-              aria-label="역 목록으로"
+              to={detailBackLink.to}
+              aria-label={detailBackLink.ariaLabel}
             >
               <span aria-hidden="true">←</span>
-              <span>역 목록</span>
+              <span>{detailBackLink.label}</span>
             </Link>
           )}
           <Link
@@ -74,7 +92,7 @@ function AppShell({ children }: PropsWithChildren) {
         </div>
       </nav>
     </div>
-  );
+  )
 }
 
-export default AppShell;
+export default AppShell

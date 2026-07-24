@@ -76,6 +76,7 @@ function RecommendationsPage() {
                 <Link
                   className={styles.recommendationLink}
                   to={`/yaku/${yaku.id}`}
+                  state={{ yakuDetailSource: 'recommendations' }}
                   aria-label={`${yaku.name} 상세 보기`}
                 >
                   <div className={styles.recommendationMeta}>
