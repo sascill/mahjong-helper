@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   getGlossaryTerm,
   type GlossaryTermId,
@@ -25,6 +26,8 @@ const TERM_GROUPS: readonly TermGroup[] = [
 ]
 
 export function TermReference() {
+  const [openTermId, setOpenTermId] = useState<GlossaryTermId | null>(null)
+
   return (
     <main className={styles.reference}>
       <header className={styles.header}>
@@ -40,18 +43,35 @@ export function TermReference() {
           >
             <h2>{group.title}</h2>
 
-            <div className={styles.termList}>
+            <ul className={styles.termList}>
               {group.termIds.map((termId) => {
                 const term = getGlossaryTerm(termId)
+                const isOpen = openTermId === term.id
+                const descriptionId = `term-description-${term.id}`
 
                 return (
-                  <article className={styles.termCard} key={term.id}>
-                    <h3>{term.label}</h3>
-                    <p>{term.description}</p>
-                  </article>
+                  <li className={styles.termItem} key={term.id}>
+                    <button
+                      className={styles.termButton}
+                      type="button"
+                      aria-expanded={isOpen}
+                      aria-controls={isOpen ? descriptionId : undefined}
+                      onClick={() => setOpenTermId(isOpen ? null : term.id)}
+                    >
+                      <span className={styles.termLabel}>{term.label}</span>
+                      <span className={styles.termState} aria-hidden="true">
+                        {isOpen ? '−' : '+'}
+                      </span>
+                    </button>
+                    {isOpen && (
+                      <p className={styles.termDescription} id={descriptionId}>
+                        {term.description}
+                      </p>
+                    )}
+                  </li>
                 )
               })}
-            </div>
+            </ul>
           </section>
         ))}
       </div>

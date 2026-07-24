@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import { TermReference } from './index'
@@ -32,20 +32,45 @@ describe('용어 기능', () => {
       '도라',
     ]) {
       expect(
-        within(reference).getByRole('heading', { name: termName, level: 3 }),
+        within(reference).getByRole('button', { name: termName }),
       ).toBeInTheDocument()
     }
 
+    expect(
+      within(reference).queryByText(
+        '치·퐁·깡으로 울지 않고 손패를 닫은 상태입니다.',
+      ),
+    ).not.toBeInTheDocument()
+    expect(
+      within(reference).queryByText(
+        '필요한 패 한 장만 오면 화료할 수 있는 상태입니다.',
+      ),
+    ).not.toBeInTheDocument()
+    expect(within(reference).queryAllByRole('article')).toHaveLength(0)
+
+    const menzenButton = within(reference).getByRole('button', {
+      name: '멘젠',
+    })
+
+    expect(menzenButton).toHaveAttribute('aria-expanded', 'false')
+
+    fireEvent.click(menzenButton)
+
+    expect(menzenButton).toHaveAttribute('aria-expanded', 'true')
     expect(
       within(reference).getByText(
         '치·퐁·깡으로 울지 않고 손패를 닫은 상태입니다.',
       ),
     ).toBeInTheDocument()
+
+    fireEvent.click(menzenButton)
+
+    expect(menzenButton).toHaveAttribute('aria-expanded', 'false')
     expect(
-      within(reference).getByText(
-        '필요한 패 한 장만 오면 화료할 수 있는 상태입니다.',
+      within(reference).queryByText(
+        '치·퐁·깡으로 울지 않고 손패를 닫은 상태입니다.',
       ),
-    ).toBeInTheDocument()
+    ).not.toBeInTheDocument()
     expect(
       within(reference).queryByText('기본 룰'),
     ).not.toBeInTheDocument()

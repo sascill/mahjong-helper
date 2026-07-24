@@ -18,12 +18,12 @@
 
 .groups {
   display: grid;
-  gap: var(--space-7);
+  gap: var(--space-8);
 }
 
 .group {
   display: grid;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
 .group h2 {
@@ -34,27 +34,55 @@
 
 .termList {
   display: grid;
-  gap: var(--space-3);
-}
-
-.termCard {
-  display: grid;
-  gap: var(--space-1);
-  padding: var(--space-4);
-  border: 1px solid var(--color-border);
-  border-left: 4px solid var(--color-gold);
-  border-radius: var(--radius-card);
-  background: var(--color-surface);
-}
-
-.termCard h3 {
   margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.termItem {
+  display: grid;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.termButton {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border: 0;
+  background: transparent;
   color: var(--color-primary-strong);
   font-size: 1rem;
+  font: inherit;
+  font-weight: 800;
+  text-align: left;
+  cursor: pointer;
 }
 
-.termCard p {
+.termButton:focus-visible {
+  border-radius: var(--radius-control);
+  outline: 3px solid var(--color-primary-soft);
+  outline-offset: 2px;
+}
+
+.termLabel {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.termState {
+  flex: 0 0 auto;
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.termDescription {
   margin: 0;
+  padding: 0 0 var(--space-4);
   color: var(--color-text-muted);
   font-size: 0.9rem;
   line-height: 1.5;
@@ -65,7 +93,7 @@
     padding-top: var(--space-8);
   }
 
-  .termList {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .groups {
+    gap: var(--space-9);
   }
 }
