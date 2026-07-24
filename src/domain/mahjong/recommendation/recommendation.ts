@@ -36,39 +36,13 @@ import type {
   RecommendationDistance,
   YakuEvaluation,
 } from './types';
+import { extractHandFeatures } from './handFeatures';
+import { RECOMMENDATION_POLICIES } from './policies';
 
 type YakuEvaluator = (input: HandInput) => YakuEvaluation;
 
 const MAX_RECOMMENDATION_COUNT = 3;
-
-const RECOMMENDATION_PRIORITY = [
-  'tanyao',
-  'chiitoitsu',
-  'honitsu',
-  'pinfu',
-  'iipeikou',
-  'yakuhai',
-  'ittsuu',
-  'sanshoku-doujun',
-  'sanshoku-doukou',
-  'toitoi',
-  'sanankou',
-  'chanta',
-  'honroutou',
-  'shousangen',
-  'ryanpeikou',
-  'junchan',
-  'chinitsu',
-  'kokushi-musou',
-  'chuuren-poutou',
-  'ryuuiisou',
-  'suuankou',
-  'chinroutou',
-  'tsuuiisou',
-  'daisangen',
-  'shousuushii',
-  'daisuushii',
-] as const satisfies readonly YakuId[];
+const OUTSIDE_RECOMMENDATION_DISTANCE = 4;
 
 const EVALUATORS = {
   riichi: null,
@@ -111,31 +85,14 @@ const EVALUATORS = {
   daisuushii: evaluateDaisuushii,
 } satisfies Record<YakuId, YakuEvaluator | null>;
 
-const RECOMMENDABLE_EVALUATORS = (
-  Object.entries(EVALUATORS) as [YakuId, YakuEvaluator | null][]
-).filter(
-  (entry): entry is [YakuId, YakuEvaluator] => entry[1] !== null,
-);
-
 const isRecommendationDistance = (
   distance: number,
 ): distance is RecommendationDistance =>
-  distance >= 1 && distance <= 5;
-
-const getPriority = (yakuId: YakuId): number => {
-  const priority = RECOMMENDATION_PRIORITY.indexOf(
-    yakuId as (typeof RECOMMENDATION_PRIORITY)[number],
-  );
-
-  if (priority === -1) {
-    throw new Error(`추천 우선순위가 정의되지 않은 역입니다: ${yakuId}`);
-  }
-
-  return priority;
-};
+  distance >= 1 && distance <= 3;
 
 const toRecommendation = (
   evaluation: YakuEvaluation,
+  reason: string,
 ): Recommendation | null => {
   if (!isRecommendationDistance(evaluation.requiredTileCount)) {
     return null;
@@ -144,9 +101,19 @@ const toRecommendation = (
   return {
     yakuId: evaluation.yakuId,
     requiredTileCount: evaluation.requiredTileCount,
-    reason: evaluation.reason,
+    reason,
   };
 };
+
+const normalizeEvaluation = (
+  evaluation: YakuEvaluation,
+): YakuEvaluation => ({
+  ...evaluation,
+  requiredTileCount: Math.min(
+    evaluation.requiredTileCount,
+    OUTSIDE_RECOMMENDATION_DISTANCE,
+  ),
+});
 
 const assertValidHandInput = (input: HandInput): void => {
   if (!validateHandInput(input).valid) {
@@ -162,21 +129,48 @@ export function evaluateYaku(
 
   const evaluator = EVALUATORS[yakuId];
 
-  return evaluator ? evaluator(input) : null;
+  return evaluator ? normalizeEvaluation(evaluator(input)) : null;
 }
 
 export function recommendYaku(input: HandInput): Recommendation[] {
   assertValidHandInput(input);
 
-  return RECOMMENDABLE_EVALUATORS.map(([, evaluator]) =>
-    evaluator(input),
+  const features = extractHandFeatures(input);
+
+  return RECOMMENDATION_POLICIES.filter(({ isEligible }) =>
+    isEligible(features),
   )
-    .map(toRecommendation)
-    .filter((result): result is Recommendation => result !== null)
+    .map(({ yakuId, createReason }, priority) => {
+      const evaluator = EVALUATORS[yakuId];
+
+      if (!evaluator) {
+        throw new Error(`목표 역 평가기가 정의되지 않았습니다: ${yakuId}`);
+      }
+
+      return {
+        evaluation: normalizeEvaluation(evaluator(input)),
+        priority,
+        reason: createReason(features),
+      };
+    })
+    .map(({ evaluation, priority, reason }) => ({
+      recommendation: toRecommendation(evaluation, reason),
+      priority,
+    }))
+    .filter(
+      (
+        result,
+      ): result is {
+        recommendation: Recommendation;
+        priority: number;
+      } => result.recommendation !== null,
+    )
     .sort(
       (left, right) =>
-        left.requiredTileCount - right.requiredTileCount ||
-        getPriority(left.yakuId) - getPriority(right.yakuId),
+        left.recommendation.requiredTileCount -
+          right.recommendation.requiredTileCount ||
+        left.priority - right.priority,
     )
-    .slice(0, MAX_RECOMMENDATION_COUNT);
+    .slice(0, MAX_RECOMMENDATION_COUNT)
+    .map(({ recommendation }) => recommendation);
 }

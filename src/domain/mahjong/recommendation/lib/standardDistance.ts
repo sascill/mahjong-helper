@@ -125,7 +125,7 @@ export function calculateStandardShapeDistance(
   ).length;
   const requiredTripletCount =
     requiredMelds.length - requiredSequenceCount;
-  let bestDistance = 6;
+  let bestDistance = 4;
 
   const searchMelds = (
     selectedMeldCount: number,

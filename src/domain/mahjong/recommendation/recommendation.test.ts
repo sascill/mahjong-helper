@@ -10,6 +10,10 @@ import {
   evaluateYaku,
   recommendYaku,
 } from './index';
+import {
+  YAKU_RECOMMENDATION_ROLES,
+  type RecommendationTargetYakuId,
+} from './policies';
 
 const createHandInput = (tiles: TileId[]): HandInput => ({
   tiles,
@@ -65,7 +69,7 @@ const HONITSU_TENPAI: TileId[] = [
   'white',
 ];
 
-const RECOMMENDABLE_YAKU_IDS: readonly YakuId[] = [
+const EVALUABLE_YAKU_IDS: readonly YakuId[] = [
   'pinfu',
   'iipeikou',
   'tanyao',
@@ -109,6 +113,38 @@ const NON_RECOMMENDABLE_YAKU_IDS: readonly YakuId[] = [
   'suukantsu',
 ];
 
+const PRIMARY_YAKU_IDS: readonly RecommendationTargetYakuId[] = [
+  'tanyao',
+  'pinfu',
+  'yakuhai',
+  'chiitoitsu',
+  'toitoi',
+  'honitsu',
+  'ittsuu',
+  'sanshoku-doujun',
+  'chanta',
+  'kokushi-musou',
+];
+
+const UPGRADE_YAKU_IDS: readonly YakuId[] = [
+  'iipeikou',
+  'sanshoku-doukou',
+  'sanankou',
+  'honroutou',
+  'shousangen',
+  'ryanpeikou',
+  'junchan',
+  'chinitsu',
+  'chuuren-poutou',
+  'ryuuiisou',
+  'suuankou',
+  'chinroutou',
+  'tsuuiisou',
+  'daisangen',
+  'shousuushii',
+  'daisuushii',
+];
+
 describe('역 추천', () => {
   it('유효하지 않은 손패를 거부한다', () => {
     expect(() =>
@@ -116,9 +152,9 @@ describe('역 추천', () => {
     ).toThrow('유효하지 않은 손패입니다.');
   });
 
-  it('모든 역을 추천 가능 또는 추천 불가로 빠짐없이 구분한다', () => {
+  it('모든 역을 거리 평가 가능 또는 불가로 빠짐없이 구분한다', () => {
     const classifiedYakuIds = [
-      ...RECOMMENDABLE_YAKU_IDS,
+      ...EVALUABLE_YAKU_IDS,
       ...NON_RECOMMENDABLE_YAKU_IDS,
     ];
 
@@ -128,7 +164,31 @@ describe('역 추천', () => {
     );
   });
 
-  it.each(RECOMMENDABLE_YAKU_IDS)(
+  it('모든 역에 목표·발전·도감 전용 역할을 빠짐없이 지정한다', () => {
+    expect(Object.keys(YAKU_RECOMMENDATION_ROLES).sort()).toEqual(
+      [...YAKU_IDS].sort(),
+    );
+    expect(
+      Object.entries(YAKU_RECOMMENDATION_ROLES)
+        .filter(([, role]) => role === 'primary')
+        .map(([yakuId]) => yakuId)
+        .sort(),
+    ).toEqual([...PRIMARY_YAKU_IDS].sort());
+    expect(
+      Object.entries(YAKU_RECOMMENDATION_ROLES)
+        .filter(([, role]) => role === 'upgrade')
+        .map(([yakuId]) => yakuId)
+        .sort(),
+    ).toEqual([...UPGRADE_YAKU_IDS].sort());
+    expect(
+      Object.entries(YAKU_RECOMMENDATION_ROLES)
+        .filter(([, role]) => role === 'catalog-only')
+        .map(([yakuId]) => yakuId)
+        .sort(),
+    ).toEqual([...NON_RECOMMENDABLE_YAKU_IDS].sort());
+  });
+
+  it.each(EVALUABLE_YAKU_IDS)(
     '%s 완성 예시에서 한 장을 뺀 손패를 거리 1로 평가한다',
     (yakuId) => {
       const yaku = YAKUS.find(({ id }) => id === yakuId);
@@ -288,7 +348,7 @@ describe('역 추천', () => {
     expect(evaluation?.requiredTileCount).toBeGreaterThan(1);
   });
 
-  it('추천 거리가 6 이상인 역을 제외한다', () => {
+  it('추천 거리가 4 이상인 역을 제외한다', () => {
     const tiles: TileId[] = [
       '2m',
       '5m',
@@ -306,6 +366,76 @@ describe('역 추천', () => {
     ];
 
     expect(recommendYaku(createHandInput(tiles))).toEqual([]);
+  });
+
+  it('또이쯔가 부족하면 치또이츠 거리가 3이어도 추천하지 않는다', () => {
+    const tiles: TileId[] = [
+      '1m',
+      '1m',
+      '1m',
+      '2m',
+      '2m',
+      '3m',
+      '3m',
+      '4m',
+      '4m',
+      '5p',
+      '6p',
+      '7s',
+      '8s',
+    ];
+
+    expect(
+      evaluateYaku(createHandInput(tiles), 'chiitoitsu'),
+    ).toMatchObject({
+      requiredTileCount: 3,
+    });
+    expect(
+      recommendYaku(createHandInput(tiles)).map(({ yakuId }) => yakuId),
+    ).not.toContain('chiitoitsu');
+  });
+
+  it('정확한 또이쯔가 네 개면 치또이츠를 목표 역으로 추천할 수 있다', () => {
+    const tiles: TileId[] = [
+      '2m',
+      '2m',
+      '3m',
+      '3m',
+      '4p',
+      '4p',
+      '5p',
+      '5p',
+      '1s',
+      '4s',
+      '7s',
+      'east',
+      'south',
+    ];
+
+    expect(recommendYaku(createHandInput(tiles))).toContainEqual(
+      expect.objectContaining({
+        yakuId: 'chiitoitsu',
+        requiredTileCount: 3,
+        reason: expect.stringContaining('또이쯔가 4개'),
+      }),
+    );
+  });
+
+  it('발전 역은 거리가 1이어도 직접 추천하지 않는다', () => {
+    const iipeikou = YAKUS.find(({ id }) => id === 'iipeikou');
+
+    if (!iipeikou) {
+      throw new Error('이페코 역 데이터를 찾을 수 없습니다.');
+    }
+
+    const input = createHandInput(iipeikou.example.flat().slice(0, 13));
+
+    expect(evaluateYaku(input, 'iipeikou')).toMatchObject({
+      requiredTileCount: 1,
+    });
+    expect(
+      recommendYaku(input).map(({ yakuId }) => yakuId),
+    ).not.toContain('iipeikou');
   });
 
   it('기존 세 역 밖의 역도 최종 추천 결과에 포함한다', () => {
@@ -347,6 +477,26 @@ describe('역 추천', () => {
         .map(({ requiredTileCount }) => requiredTileCount)
         .sort((left, right) => left - right),
     );
+  });
+
+  it('목표 역만 최대 세 개 추천한다', () => {
+    const recommendations = recommendYaku(
+      createHandInput(SIMPLE_SIX_PAIRS),
+    );
+
+    expect(recommendations.length).toBeGreaterThan(0);
+    expect(recommendations.length).toBeLessThanOrEqual(3);
+    expect(
+      recommendations.every(
+        ({ yakuId }) =>
+          YAKU_RECOMMENDATION_ROLES[yakuId] === 'primary',
+      ),
+    ).toBe(true);
+    expect(
+      recommendations.every(
+        ({ requiredTileCount }) => requiredTileCount <= 3,
+      ),
+    ).toBe(true);
   });
 
   it('거리가 같으면 탕야오를 치또이츠보다 먼저 추천한다', () => {
