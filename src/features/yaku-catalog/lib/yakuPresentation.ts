@@ -103,14 +103,14 @@ export const getPrimaryValueLabel = (yaku: Yaku): string =>
     ? '역만'
     : `멘젠 ${yaku.value.closed}판`
 
-export const getOpenValueLabel = (yaku: Yaku): string => {
+export const getListConditionLabel = (yaku: Yaku): string => {
   if (yaku.value.type === 'yakuman') {
-    return yaku.value.open ? '울기 가능' : '멘젠 전용'
+    return yaku.value.open ? '울기 가능' : '멘젠'
   }
 
   return yaku.value.open === null
-    ? '멘젠 전용'
-    : `울기 ${yaku.value.open}판`
+    ? '멘젠'
+    : `울면 ${yaku.value.open}판`
 }
 
 export const getDetailOpenValueLabel = (yaku: Yaku): string => {

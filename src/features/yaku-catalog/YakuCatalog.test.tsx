@@ -88,8 +88,23 @@ describe('역 정보 기능', () => {
     ).not.toBeInTheDocument()
     expect(within(catalog).queryByText('멘젠 1판')).not.toBeInTheDocument()
     expect(within(catalog).queryByText('멘젠 2판')).not.toBeInTheDocument()
-    expect(within(catalog).getAllByText('울기 1판').length).toBeGreaterThan(0)
-    expect(within(catalog).getAllByText('멘젠 전용').length).toBeGreaterThan(0)
+    expect(within(catalog).queryByText('울기 1판')).not.toBeInTheDocument()
+    expect(within(catalog).queryByText('멘젠 전용')).not.toBeInTheDocument()
+    expect(within(catalog).queryByText('자세히 보기 →')).not.toBeInTheDocument()
+
+    const riichiCard = within(catalog).getByRole('link', {
+      name: '리치 상세 보기',
+    })
+    const tanyaoCard = within(catalog).getByRole('link', {
+      name: '탕야오 상세 보기',
+    })
+    const honitsuCard = within(catalog).getByRole('link', {
+      name: '혼일색 상세 보기',
+    })
+
+    expect(within(riichiCard).getByText('멘젠')).toBeInTheDocument()
+    expect(within(tanyaoCard).getByText('울면 1판')).toBeInTheDocument()
+    expect(within(honitsuCard).getByText('울면 2판')).toBeInTheDocument()
 
     const compactSummaries = Array.from(
       catalog.querySelectorAll('article p'),

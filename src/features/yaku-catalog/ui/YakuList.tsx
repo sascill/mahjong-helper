@@ -5,7 +5,7 @@ import styles from '../YakuCatalog.module.css'
 import {
   getCompactYakuSummary,
   getYakuGroupAnchorId,
-  getOpenValueLabel,
+  getListConditionLabel,
   groupYakus,
 } from '../lib/yakuPresentation'
 
@@ -59,12 +59,11 @@ export function YakuList({ yakus }: YakuListProps) {
                   >
                     <div className={styles.listCardTitle}>
                       <h3>{yaku.name}</h3>
+                      <span className={styles.listCardCondition}>
+                        {getListConditionLabel(yaku)}
+                      </span>
                     </div>
                     <p>{getCompactYakuSummary(yaku)}</p>
-                    <div className={styles.listCardFooter}>
-                      <span>{getOpenValueLabel(yaku)}</span>
-                      <span aria-hidden="true">자세히 보기 →</span>
-                    </div>
                   </Link>
                 </article>
               ))}
