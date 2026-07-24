@@ -4,6 +4,7 @@ import {
   type TileSuit,
 } from '../../../domain/mahjong/hand'
 import { getTileLabel } from '../../../shared/lib/tilePresentation'
+import { MahjongTile } from '../../../shared/ui'
 import styles from '../HandSelection.module.css'
 
 type TilePaletteProps = {
@@ -37,7 +38,7 @@ function TilePalette({
                 disabled={!canSelectTile(tile.id)}
                 onClick={() => onSelectTile(tile.id)}
               >
-                {tile.symbol}
+                <MahjongTile tileId={tile.id} />
               </button>
             ))}
           </div>

@@ -50,7 +50,7 @@ function YakuCatalog(props: YakuCatalogProps): JSX.Element;
 - 성립 조건
 - 멘젠 필수 여부
 - 치·퐁·깡 가능 여부
-- 유니코드 마작패로 구성한 완성 예시
+- 마작패 이미지로 구성한 완성 예시
 
 멘젠과 울기 조건은 `Yaku.value`를 기준으로 표시한다.
 
@@ -74,7 +74,7 @@ function YakuCatalog(props: YakuCatalogProps): JSX.Element;
 → 치·퐁·깡 가능
 ```
 
-완성 예시는 역 데이터의 묶음 구분을 유지한다. 각 패는 유니코드 문자와 읽을 수 있는 접근성 이름을 함께 제공한다.
+완성 예시는 역 데이터의 묶음 구분을 유지한다. 각 패는 이미지와 읽을 수 있는 접근성 이름을 함께 제공한다.
 
 ## 화면 경로
 

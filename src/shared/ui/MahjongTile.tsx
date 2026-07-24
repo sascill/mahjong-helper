@@ -1,6 +1,7 @@
 import type { TileId } from '../../domain/mahjong/hand'
 import {
   getTile,
+  getTileImageSrc,
   getTileLabel,
 } from '../lib/tilePresentation'
 import styles from './MahjongTile.module.css'
@@ -18,7 +19,12 @@ export function MahjongTile({ tileId }: MahjongTileProps) {
       role="img"
       aria-label={getTileLabel(tile)}
     >
-      {tile.symbol}
+      <img
+        className={styles.image}
+        src={getTileImageSrc(tile)}
+        alt=""
+        draggable={false}
+      />
     </span>
   )
 }
