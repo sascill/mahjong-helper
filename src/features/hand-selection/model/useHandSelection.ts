@@ -9,12 +9,10 @@ import {
   type Wind,
 } from '../../../domain/mahjong/hand'
 
-export type SelectedWind = Wind | ''
-
 export const useHandSelection = () => {
   const [tiles, setTiles] = useState<TileId[]>([])
-  const [roundWind, setRoundWind] = useState<SelectedWind>('')
-  const [seatWind, setSeatWind] = useState<SelectedWind>('')
+  const [roundWind, setRoundWind] = useState<Wind>('east')
+  const [seatWind, setSeatWind] = useState<Wind>('east')
 
   const canSelectTile = (tileId: TileId): boolean =>
     canAddTile(tiles, tileId)
@@ -35,21 +33,18 @@ export const useHandSelection = () => {
 
   const reset = () => {
     setTiles([])
-    setRoundWind('')
-    setSeatWind('')
+    setRoundWind('east')
+    setSeatWind('east')
   }
 
-  const handInput: HandInput | null =
-    roundWind === '' || seatWind === ''
-      ? null
-      : {
-          tiles: [...tiles],
-          roundWind,
-          seatWind,
-        }
+  const handInput: HandInput = {
+    tiles: [...tiles],
+    roundWind,
+    seatWind,
+  }
 
   const analysisInput =
-    handInput && validateHandInput(handInput).valid ? handInput : null
+    validateHandInput(handInput).valid ? handInput : null
 
   return {
     tiles,

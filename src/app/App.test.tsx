@@ -42,18 +42,23 @@ const NO_RECOMMENDATION_HAND = [
 ]
 
 const completeHandInput = (tileLabels: string[]) => {
+  const tileButtons = new Map(
+    screen
+      .getAllByRole('button', { name: /추가$/ })
+      .map((button) => [button.getAttribute('aria-label'), button]),
+  )
+
   for (const tileLabel of tileLabels) {
-    fireEvent.click(
-      screen.getByRole('button', { name: `${tileLabel} 추가` }),
-    )
+    const tileButton = tileButtons.get(`${tileLabel} 추가`)
+
+    if (!tileButton) {
+      throw new Error(`${tileLabel} 패 버튼을 찾을 수 없습니다.`)
+    }
+
+    fireEvent.click(tileButton)
   }
 
-  fireEvent.change(screen.getByRole('combobox', { name: '장풍' }), {
-    target: { value: 'east' },
-  })
-  fireEvent.change(screen.getByRole('combobox', { name: '자풍' }), {
-    target: { value: 'south' },
-  })
+  fireEvent.click(screen.getByRole('button', { name: '자풍 다음' }))
 }
 
 describe('애플리케이션 진입점', () => {

@@ -1,27 +1,18 @@
 import type { FormEvent } from 'react'
 
-import type { HandInput, Wind } from '../../domain/mahjong/hand'
+import type { HandInput } from '../../domain/mahjong/hand'
 import {
   getTile,
   getTileLabel,
 } from '../../shared/lib/tilePresentation'
-import {
-  useHandSelection,
-  type SelectedWind,
-} from './model/useHandSelection'
+import { useHandSelection } from './model/useHandSelection'
 import styles from './HandSelection.module.css'
 import TilePalette from './ui/TilePalette'
+import WindStepper from './ui/WindStepper'
 
 type HandSelectionProps = {
   onAnalyze: (input: HandInput) => void
 }
-
-const WIND_OPTIONS: { label: string; value: Wind }[] = [
-  { label: '동', value: 'east' },
-  { label: '남', value: 'south' },
-  { label: '서', value: 'west' },
-  { label: '북', value: 'north' },
-]
 
 function HandSelection({ onAnalyze }: HandSelectionProps) {
   const selection = useHandSelection()
@@ -77,39 +68,16 @@ function HandSelection({ onAnalyze }: HandSelectionProps) {
         </div>
 
         <div className={styles.windFields}>
-          <label>
-            장풍
-            <select
-              value={selection.roundWind}
-              onChange={(event) =>
-                selection.setRoundWind(event.target.value as SelectedWind)
-              }
-            >
-              <option value="">선택</option>
-              {WIND_OPTIONS.map((wind) => (
-                <option key={wind.value} value={wind.value}>
-                  {wind.label}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <label>
-            자풍
-            <select
-              value={selection.seatWind}
-              onChange={(event) =>
-                selection.setSeatWind(event.target.value as SelectedWind)
-              }
-            >
-              <option value="">선택</option>
-              {WIND_OPTIONS.map((wind) => (
-                <option key={wind.value} value={wind.value}>
-                  {wind.label}
-                </option>
-              ))}
-            </select>
-          </label>
+          <WindStepper
+            label="장풍"
+            value={selection.roundWind}
+            onChange={selection.setRoundWind}
+          />
+          <WindStepper
+            label="자풍"
+            value={selection.seatWind}
+            onChange={selection.setSeatWind}
+          />
         </div>
       </section>
 

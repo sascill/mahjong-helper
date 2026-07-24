@@ -121,27 +121,27 @@ describe('손패 선택 기능', () => {
     ])
   })
 
-  it('장풍과 자풍을 독립적으로 선택하고 전체 입력을 초기화한다', async () => {
+  it('장풍과 자풍을 동풍으로 시작하고 이전·다음 버튼으로 독립적으로 순환한다', async () => {
     const user = userEvent.setup()
 
     render(<HandSelection onAnalyze={vi.fn()} />)
 
-    await user.click(screen.getByRole('button', { name: '1만 추가' }))
-    await user.selectOptions(screen.getByRole('combobox', { name: '장풍' }), [
-      'east',
-    ])
-    await user.selectOptions(screen.getByRole('combobox', { name: '자풍' }), [
-      'east',
-    ])
+    expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+    expect(screen.getByLabelText('장풍 현재 값')).toHaveTextContent('동')
+    expect(screen.getByLabelText('자풍 현재 값')).toHaveTextContent('동')
 
-    expect(screen.getByRole('combobox', { name: '장풍' })).toHaveValue('east')
-    expect(screen.getByRole('combobox', { name: '자풍' })).toHaveValue('east')
+    await user.click(screen.getByRole('button', { name: '1만 추가' }))
+    await user.click(screen.getByRole('button', { name: '장풍 이전' }))
+    await user.click(screen.getByRole('button', { name: '자풍 다음' }))
+
+    expect(screen.getByLabelText('장풍 현재 값')).toHaveTextContent('북')
+    expect(screen.getByLabelText('자풍 현재 값')).toHaveTextContent('남')
 
     await user.click(screen.getByRole('button', { name: '초기화' }))
 
     expect(screen.getByText('0 / 13')).toBeInTheDocument()
-    expect(screen.getByRole('combobox', { name: '장풍' })).toHaveValue('')
-    expect(screen.getByRole('combobox', { name: '자풍' })).toHaveValue('')
+    expect(screen.getByLabelText('장풍 현재 값')).toHaveTextContent('동')
+    expect(screen.getByLabelText('자풍 현재 값')).toHaveTextContent('동')
   })
 
   it('완성된 입력을 분석 콜백에 전달한다', () => {
@@ -152,17 +152,9 @@ describe('손패 선택 기능', () => {
     addTiles(INITIAL_HAND_LABELS)
     const analyzeButton = screen.getByRole('button', { name: '분석하기' })
 
-    expect(analyzeButton).toBeDisabled()
-
-    fireEvent.change(screen.getByRole('combobox', { name: '장풍' }), {
-      target: { value: 'east' },
-    })
-    fireEvent.change(screen.getByRole('combobox', { name: '자풍' }), {
-      target: { value: 'south' },
-    })
-
     expect(analyzeButton).toBeEnabled()
 
+    fireEvent.click(screen.getByRole('button', { name: '자풍 다음' }))
     fireEvent.click(analyzeButton)
 
     expect(onAnalyze).toHaveBeenCalledWith({
