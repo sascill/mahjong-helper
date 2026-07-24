@@ -48,7 +48,7 @@ export const createShapeEvaluation = (
 ): YakuEvaluation => {
   const retainedTileCount = 14 - requiredTileCount;
   const reason =
-    requiredTileCount <= 5
+    requiredTileCount <= 3
       ? `${description} 완성형에 현재 패를 최대 ${retainedTileCount}장 유지할 수 있습니다.`
       : `${description} 완성형과 현재 손패의 거리가 추천 범위를 벗어납니다.`;
 
@@ -59,7 +59,7 @@ export const calculateRequiredPatternDistance = (
   tiles: readonly TileId[],
   patterns: readonly (readonly MeldCandidate[])[],
 ): number => {
-  let bestDistance = 6;
+  let bestDistance = 4;
 
   for (const requiredMelds of patterns) {
     bestDistance = Math.min(
