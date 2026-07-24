@@ -18,10 +18,15 @@ type InlineGlossaryMatch = {
   keyword: string
 }
 
+const INLINE_SINGLE_CHARACTER_TERM_IDS = new Set<GlossaryTerm['id']>(['ron'])
+
 const INLINE_GLOSSARY_MATCHES: readonly InlineGlossaryMatch[] = GLOSSARY_TERMS
   .flatMap((term) =>
     [term.label, ...term.aliases]
-      .filter((keyword) => keyword.length > 1)
+      .filter(
+        (keyword) =>
+          keyword.length > 1 || INLINE_SINGLE_CHARACTER_TERM_IDS.has(term.id),
+      )
       .map((keyword) => ({ term, keyword })),
   )
   .sort((a, b) => b.keyword.length - a.keyword.length)

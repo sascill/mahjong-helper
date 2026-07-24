@@ -22,6 +22,8 @@ const INITIAL_TERM_LABELS = [
   '대기',
   '텐파이',
   '화료',
+  '쯔모',
+  '론',
   '도라',
 ]
 
@@ -41,6 +43,8 @@ describe('마작 용어', () => {
       '같은 종류의 숫자패가 3장 연속',
     )
     expect(getGlossaryTerm('dora').description).toContain('역은 아닙니다')
+    expect(getGlossaryTerm('tsumo').description).toContain('직접 뽑은 패')
+    expect(getGlossaryTerm('ron').description).toContain('다른 사람이 버린 패')
   })
 
   it('용어 ID를 중복 없이 조회할 수 있다', () => {

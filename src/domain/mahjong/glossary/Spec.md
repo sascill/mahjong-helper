@@ -43,6 +43,8 @@ function getGlossaryTerm(id: GlossaryTermId): GlossaryTerm;
 - 대기
 - 텐파이
 - 화료
+- 쯔모
+- 론
 - 도라
 
 ## 제외 범위

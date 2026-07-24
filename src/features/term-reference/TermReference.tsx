@@ -13,7 +13,17 @@ type TermGroup = {
 const TERM_GROUPS: readonly TermGroup[] = [
   {
     title: '기본 진행',
-    termIds: ['menzen', 'open', 'chi', 'pon', 'kan', 'tenpai', 'agari'],
+    termIds: [
+      'menzen',
+      'open',
+      'chi',
+      'pon',
+      'kan',
+      'tenpai',
+      'agari',
+      'tsumo',
+      'ron',
+    ],
   },
   {
     title: '패와 형태',

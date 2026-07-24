@@ -90,6 +90,18 @@ export const GLOSSARY_TERMS = [
     description: '손패를 완성해 점수를 받는 것입니다. 쯔모나 론으로 화료할 수 있습니다.',
   },
   {
+    id: 'tsumo',
+    label: '쯔모',
+    aliases: [],
+    description: '자신이 직접 뽑은 패로 화료하는 것입니다.',
+  },
+  {
+    id: 'ron',
+    label: '론',
+    aliases: [],
+    description: '다른 사람이 버린 패로 화료하는 것입니다.',
+  },
+  {
     id: 'dora',
     label: '도라',
     aliases: [],

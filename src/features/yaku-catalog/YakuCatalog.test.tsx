@@ -238,6 +238,42 @@ describe('역 정보 기능', () => {
     expect(within(requirements).queryByRole('note')).not.toBeInTheDocument()
   })
 
+  it('쯔모와 론 용어도 역 상세 도움말로 표시한다', () => {
+    render(
+      <MemoryRouter>
+        <YakuCatalog selectedYaku={getYaku('menzen-tsumo')} />
+      </MemoryRouter>,
+    )
+
+    const requirements = screen.getByRole('region', {
+      name: '성립하는 모양',
+    })
+    const tsumoButton = within(requirements).getByRole('button', {
+      name: '쯔모',
+    })
+    const ronButton = within(requirements).getByRole('button', {
+      name: '론',
+    })
+
+    expect(tsumoButton).toHaveAttribute('aria-expanded', 'false')
+    expect(ronButton).toHaveAttribute('aria-expanded', 'false')
+
+    fireEvent.click(ronButton)
+
+    expect(ronButton).toHaveAttribute('aria-expanded', 'true')
+    expect(within(requirements).getByRole('note')).toHaveTextContent(
+      '다른 사람이 버린 패로 화료하는 것입니다.',
+    )
+
+    fireEvent.click(tsumoButton)
+
+    expect(ronButton).toHaveAttribute('aria-expanded', 'false')
+    expect(tsumoButton).toHaveAttribute('aria-expanded', 'true')
+    expect(within(requirements).getByRole('note')).toHaveTextContent(
+      '자신이 직접 뽑은 패로 화료하는 것입니다.',
+    )
+  })
+
   it('역 상세 화면은 스크롤 최상단에서 시작한다', () => {
     render(
       <MemoryRouter>
