@@ -47,6 +47,13 @@
 - 스펙 경로: `src/domain/mahjong/recommendation/Spec.md`
 - 구현 경로: `src/domain/mahjong/recommendation/`
 
+### 용어
+
+인라인 도움말에서 사용할 리치마작 용어와 짧은 설명을 관리한다.
+
+- 스펙 경로: `src/domain/mahjong/glossary/Spec.md`
+- 구현 경로: `src/domain/mahjong/glossary/`
+
 ## 기능
 
 ### 손패 선택
@@ -76,13 +83,6 @@
 
 - 스펙 경로: `src/features/tile-reference/Spec.md`
 - 구현 경로: `src/features/tile-reference/`
-
-### 룰 정보
-
-초보자가 게임 중 자주 확인하는 기본 룰을 정리하는 기능이다.
-
-- 스펙 경로: `src/features/rule-reference/Spec.md`
-- 구현 경로: `src/features/rule-reference/`
 
 ## 문서 관리 규칙
 
