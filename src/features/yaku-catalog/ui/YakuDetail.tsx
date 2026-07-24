@@ -1,5 +1,3 @@
-import { Link } from 'react-router'
-
 import type { Yaku } from '../../../domain/mahjong/yaku'
 import { MahjongTile } from '../../../shared/ui'
 import styles from '../YakuCatalog.module.css'
@@ -18,10 +16,6 @@ export function YakuDetail({ yaku }: YakuDetailProps) {
 
   return (
     <>
-      <Link className={styles.backLink} to="/yaku">
-        ← 역 목록으로
-      </Link>
-
       <header className={styles.detailHeader}>
         <p className={styles.eyebrow}>역 상세</p>
         <h1>{yaku.name}</h1>

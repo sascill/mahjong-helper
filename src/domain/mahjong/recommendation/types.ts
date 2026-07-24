@@ -1,6 +1,6 @@
 import type { YakuId } from '../yaku';
 
-export type RecommendationDistance = 1 | 2 | 3 | 4 | 5;
+export type RecommendationDistance = 1 | 2 | 3;
 
 export type Recommendation = {
   yakuId: YakuId;

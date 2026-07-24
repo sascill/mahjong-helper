@@ -1,5 +1,9 @@
-export { recommendYaku } from './recommendation';
+export {
+  evaluateYaku,
+  recommendYaku,
+} from './recommendation';
 export type {
   Recommendation,
   RecommendationDistance,
+  YakuEvaluation,
 } from './types';

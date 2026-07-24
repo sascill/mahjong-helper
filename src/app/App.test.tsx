@@ -26,18 +26,18 @@ const TANYAO_HAND = [
 ]
 
 const NO_RECOMMENDATION_HAND = [
-  '1만',
-  '9만',
-  '1통',
-  '9통',
-  '1삭',
-  '9삭',
+  '2만',
+  '5만',
+  '8만',
+  '2통',
+  '5통',
+  '8통',
+  '2삭',
+  '5삭',
+  '8삭',
   '동',
   '남',
-  '서',
-  '북',
   '백',
-  '발',
   '중',
 ]
 
@@ -214,6 +214,26 @@ describe('애플리케이션 진입점', () => {
       screen.getByRole('heading', { name: '치또이츠', level: 1 }),
     ).toBeInTheDocument()
     expect(screen.getByText('멘젠 필수')).toBeInTheDocument()
+  })
+
+  it('역 상세의 공통 헤더에서 역 목록으로 이동할 수 있다', () => {
+    render(
+      <MemoryRouter initialEntries={['/yaku/chiitoitsu']}>
+        <App />
+      </MemoryRouter>,
+    )
+
+    const header = screen.getByRole('banner', {
+      name: '애플리케이션 헤더',
+    })
+    const detail = screen.getByRole('main')
+
+    expect(
+      within(header).getByRole('link', { name: '역 목록으로' }),
+    ).toHaveAttribute('href', '/yaku')
+    expect(
+      within(detail).queryByRole('link', { name: /역 목록으로/ }),
+    ).not.toBeInTheDocument()
   })
 
   it('존재하지 않는 역 ID는 역 목록으로 이동한다', () => {

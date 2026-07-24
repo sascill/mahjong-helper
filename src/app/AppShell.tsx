@@ -1,5 +1,5 @@
-import type { PropsWithChildren } from "react";
-import { Link, NavLink } from "react-router";
+import type { PropsWithChildren } from 'react'
+import { Link, NavLink, useMatch } from 'react-router'
 
 import styles from "./AppShell.module.css";
 
@@ -10,12 +10,31 @@ function getNavigationClassName(isActive: boolean) {
 }
 
 function AppShell({ children }: PropsWithChildren) {
+  const isYakuDetail = useMatch('/yaku/:yakuId') !== null
+
   return (
     <div className={styles.shell}>
-      <header className={styles.header}>
+      <header
+        className={styles.header}
+        aria-label="애플리케이션 헤더"
+      >
         <div className={styles.headerInner}>
-          <Link className={styles.brand} to="/" aria-label="Mahjong Helper 홈">
-            Helper
+          {isYakuDetail && (
+            <Link
+              className={styles.headerBackLink}
+              to="/yaku"
+              aria-label="역 목록으로"
+            >
+              <span aria-hidden="true">←</span>
+              <span>역 목록</span>
+            </Link>
+          )}
+          <Link
+            className={styles.brand}
+            to="/"
+            aria-label="Mahjong Helper 홈"
+          >
+            Mahjong Helper
           </Link>
         </div>
       </header>
