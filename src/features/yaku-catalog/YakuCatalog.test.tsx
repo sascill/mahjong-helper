@@ -139,10 +139,19 @@ describe('역 정보 기능', () => {
     expect(
       screen.getByRole('heading', { name: '치또이츠', level: 1 }),
     ).toBeInTheDocument()
-    expect(screen.getByText('멘젠 2판')).toBeInTheDocument()
-    expect(screen.getByText('울기 불가')).toBeInTheDocument()
-    expect(screen.getByText('멘젠 필수')).toBeInTheDocument()
-    expect(screen.getByText('치·퐁·깡 불가')).toBeInTheDocument()
+    expect(
+      screen.queryByRole('heading', { name: '판수와 조건', level: 2 }),
+    ).not.toBeInTheDocument()
+    expect(
+      screen.getByRole('group', { name: '판수와 울기 조건' }),
+    ).toHaveTextContent('2판멘젠')
+    expect(screen.queryByText('멘젠 2판')).not.toBeInTheDocument()
+    expect(screen.queryByText('울기 불가')).not.toBeInTheDocument()
+    expect(screen.queryByText('멘젠 필수')).not.toBeInTheDocument()
+    expect(screen.queryByText('치·퐁·깡 불가')).not.toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: '성립하는 모양', level: 2 }),
+    ).toBeInTheDocument()
     expect(
       screen.getByText('서로 다른 패의 또이쯔가 일곱 개 필요합니다.'),
     ).toBeInTheDocument()
@@ -163,9 +172,10 @@ describe('역 정보 기능', () => {
     )
 
     expect(screen.getByText('멘젠 3판')).toBeInTheDocument()
-    expect(screen.getByText('울기 2판')).toBeInTheDocument()
-    expect(screen.getByText('멘젠 필수 아님')).toBeInTheDocument()
-    expect(screen.getByText('치·퐁·깡 가능')).toBeInTheDocument()
+    expect(screen.getByText('울면 2판')).toBeInTheDocument()
+    expect(screen.queryByText('울기 2판')).not.toBeInTheDocument()
+    expect(screen.queryByText('멘젠 필수 아님')).not.toBeInTheDocument()
+    expect(screen.queryByText('치·퐁·깡 가능')).not.toBeInTheDocument()
   })
 
   it('역만의 가치와 멘젠 조건을 표시한다', () => {
@@ -182,8 +192,9 @@ describe('역 정보 기능', () => {
       }),
     ).toBeInTheDocument()
     expect(screen.getByText('역만')).toBeInTheDocument()
-    expect(screen.getByText('멘젠 필수')).toBeInTheDocument()
-    expect(screen.getByText('치·퐁·깡 불가')).toBeInTheDocument()
+    expect(screen.getByText('멘젠')).toBeInTheDocument()
+    expect(screen.queryByText('멘젠 필수')).not.toBeInTheDocument()
+    expect(screen.queryByText('치·퐁·깡 불가')).not.toBeInTheDocument()
 
     const example = screen.getByRole('region', {
       name: '국사무쌍 완성 예시',

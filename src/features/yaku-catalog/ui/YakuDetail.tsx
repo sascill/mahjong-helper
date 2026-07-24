@@ -1,18 +1,14 @@
 import type { Yaku } from '../../../domain/mahjong/yaku'
 import { MahjongTile } from '../../../shared/ui'
 import styles from '../YakuCatalog.module.css'
-import {
-  canOpenYaku,
-  getDetailOpenValueLabel,
-  getPrimaryValueLabel,
-} from '../lib/yakuPresentation'
+import { getDetailValueLabels } from '../lib/yakuPresentation'
 
 type YakuDetailProps = {
   yaku: Yaku
 }
 
 export function YakuDetail({ yaku }: YakuDetailProps) {
-  const canOpen = canOpenYaku(yaku)
+  const valueLabels = getDetailValueLabels(yaku)
 
   return (
     <>
@@ -20,25 +16,19 @@ export function YakuDetail({ yaku }: YakuDetailProps) {
         <p className={styles.eyebrow}>역 상세</p>
         <h1>{yaku.name}</h1>
         <p className={styles.description}>{yaku.summary}</p>
+        <div
+          className={styles.detailMeta}
+          role="group"
+          aria-label="판수와 울기 조건"
+        >
+          {valueLabels.map((label) => (
+            <span key={label}>{label}</span>
+          ))}
+        </div>
       </header>
 
-      <section
-        className={styles.infoCard}
-        aria-label="판수와 울기 조건"
-      >
-        <h2>판수와 조건</h2>
-        <div className={styles.hanList}>
-          <span>{getPrimaryValueLabel(yaku)}</span>
-          <span>{getDetailOpenValueLabel(yaku)}</span>
-        </div>
-        <div className={styles.statusList}>
-          <span>{canOpen ? '멘젠 필수 아님' : '멘젠 필수'}</span>
-          <span>{canOpen ? '치·퐁·깡 가능' : '치·퐁·깡 불가'}</span>
-        </div>
-      </section>
-
       <section className={styles.infoCard} aria-labelledby="requirements-title">
-        <h2 id="requirements-title">성립 조건</h2>
+        <h2 id="requirements-title">성립하는 모양</h2>
         <ul className={styles.requirements}>
           {yaku.requirements.map((requirement) => (
             <li key={requirement}>{requirement}</li>

@@ -98,11 +98,6 @@ export const getYakuGroupAnchorId = (label: YakuGroupLabel): string =>
 export const getCompactYakuSummary = (yaku: Yaku): string =>
   YAKU_COMPACT_SUMMARIES[yaku.id]
 
-export const getPrimaryValueLabel = (yaku: Yaku): string =>
-  yaku.value.type === 'yakuman'
-    ? '역만'
-    : `멘젠 ${yaku.value.closed}판`
-
 export const getListConditionLabel = (yaku: Yaku): string => {
   if (yaku.value.type === 'yakuman') {
     return yaku.value.open ? '울기 가능' : '멘젠'
@@ -117,17 +112,16 @@ export const getListConditionLabel = (yaku: Yaku): string => {
     : `울면 ${yaku.value.open}판`
 }
 
-export const getDetailOpenValueLabel = (yaku: Yaku): string => {
+export const getDetailValueLabels = (yaku: Yaku): readonly string[] => {
   if (yaku.value.type === 'yakuman') {
-    return yaku.value.open ? '울기 가능' : '울기 불가'
+    return ['역만', yaku.value.open ? '울기 가능' : '멘젠']
   }
 
-  return yaku.value.open === null
-    ? '울기 불가'
-    : `울기 ${yaku.value.open}판`
-}
+  if (yaku.value.open === null) {
+    return [`${yaku.value.closed}판`, '멘젠']
+  }
 
-export const canOpenYaku = (yaku: Yaku): boolean =>
-  yaku.value.type === 'yakuman'
-    ? yaku.value.open
-    : yaku.value.open !== null
+  return yaku.value.open === yaku.value.closed
+    ? [`${yaku.value.closed}판`, '울기 가능']
+    : [`멘젠 ${yaku.value.closed}판`, `울면 ${yaku.value.open}판`]
+}

@@ -251,7 +251,12 @@ describe('애플리케이션 진입점', () => {
     expect(
       screen.getByRole('heading', { name: '치또이츠', level: 1 }),
     ).toBeInTheDocument()
-    expect(screen.getByText('멘젠 필수')).toBeInTheDocument()
+    expect(
+      screen.getByRole('group', { name: '판수와 울기 조건' }),
+    ).toHaveTextContent('2판멘젠')
+    expect(
+      screen.getByRole('heading', { name: '성립하는 모양' }),
+    ).toBeInTheDocument()
   })
 
   it('역 상세의 공통 헤더에서 역 목록으로 이동할 수 있다', () => {
