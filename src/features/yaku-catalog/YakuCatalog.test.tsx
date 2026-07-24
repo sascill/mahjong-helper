@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -152,9 +152,13 @@ describe('역 정보 기능', () => {
     expect(
       screen.getByRole('heading', { name: '성립하는 모양', level: 2 }),
     ).toBeInTheDocument()
-    expect(
-      screen.getByText('서로 다른 패의 또이쯔가 일곱 개 필요합니다.'),
-    ).toBeInTheDocument()
+    const requirements = screen.getByRole('region', {
+      name: '성립하는 모양',
+    })
+
+    expect(within(requirements).getAllByRole('listitem')[0]).toHaveTextContent(
+      '서로 다른 패의 또이쯔가 일곱 개 필요합니다.',
+    )
 
     const example = screen.getByRole('region', {
       name: '치또이츠 완성 예시',
@@ -191,8 +195,9 @@ describe('역 정보 기능', () => {
         level: 1,
       }),
     ).toBeInTheDocument()
-    expect(screen.getByText('역만')).toBeInTheDocument()
-    expect(screen.getByText('멘젠')).toBeInTheDocument()
+    expect(
+      screen.getByRole('group', { name: '판수와 울기 조건' }),
+    ).toHaveTextContent('역만멘젠')
     expect(screen.queryByText('멘젠 필수')).not.toBeInTheDocument()
     expect(screen.queryByText('치·퐁·깡 불가')).not.toBeInTheDocument()
 
@@ -201,6 +206,36 @@ describe('역 정보 기능', () => {
     })
 
     expect(within(example).getAllByRole('img')).toHaveLength(14)
+  })
+
+  it('역 상세 문장의 용어 도움말을 펼친다', () => {
+    render(
+      <MemoryRouter>
+        <YakuCatalog selectedYaku={getYaku('chiitoitsu')} />
+      </MemoryRouter>,
+    )
+
+    const requirements = screen.getByRole('region', {
+      name: '성립하는 모양',
+    })
+    const toitsuButton = within(requirements).getAllByRole('button', {
+      name: '또이쯔',
+    })[0]
+
+    expect(toitsuButton).toHaveAttribute('aria-expanded', 'false')
+    expect(within(requirements).queryByRole('note')).not.toBeInTheDocument()
+
+    fireEvent.click(toitsuButton)
+
+    expect(toitsuButton).toHaveAttribute('aria-expanded', 'true')
+    expect(within(requirements).getByRole('note')).toHaveTextContent(
+      '같은 패 2장이 모인 묶음입니다.',
+    )
+
+    fireEvent.click(toitsuButton)
+
+    expect(toitsuButton).toHaveAttribute('aria-expanded', 'false')
+    expect(within(requirements).queryByRole('note')).not.toBeInTheDocument()
   })
 
   it('역 상세 화면은 스크롤 최상단에서 시작한다', () => {

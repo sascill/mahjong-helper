@@ -68,6 +68,51 @@
   line-height: 1;
 }
 
+.inlineGlossaryButton {
+  display: inline;
+  margin: 0;
+  padding: 0 1px;
+  border: 0;
+  background: transparent;
+  color: var(--color-primary-strong);
+  font: inherit;
+  font-weight: 800;
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.inlineGlossaryButton[aria-expanded='true'] {
+  color: var(--color-accent);
+}
+
+.inlineGlossaryButton:focus-visible {
+  border-radius: 2px;
+  outline: 3px solid var(--color-primary-soft);
+  outline-offset: 2px;
+}
+
+.inlineGlossaryNote {
+  display: block;
+  margin-top: var(--space-2);
+  padding: var(--space-3);
+  border-left: 3px solid var(--color-accent);
+  border-radius: 0 var(--radius-control) var(--radius-control) 0;
+  background: var(--color-primary-soft);
+  color: var(--color-text);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.inlineGlossaryNoteTitle {
+  display: block;
+  margin-bottom: var(--space-1);
+  color: var(--color-primary-strong);
+  font-weight: 800;
+}
+
 .groupNavigation {
   position: sticky;
   z-index: 10;
