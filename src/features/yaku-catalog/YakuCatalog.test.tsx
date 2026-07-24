@@ -1,10 +1,18 @@
 import { render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
-import { describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { getYaku, YAKUS } from '../../domain/mahjong/yaku'
 import { YakuCatalog } from './index'
 import styles from './YakuCatalog.module.css'
+
+beforeEach(() => {
+  vi.spyOn(window, 'scrollTo').mockImplementation(() => undefined)
+})
+
+afterEach(() => {
+  vi.restoreAllMocks()
+})
 
 describe('역 정보 기능', () => {
   it('지원하는 모든 역을 판수와 역만으로 구분해 표시한다', () => {
@@ -182,5 +190,19 @@ describe('역 정보 기능', () => {
     })
 
     expect(within(example).getAllByRole('img')).toHaveLength(14)
+  })
+
+  it('역 상세 화면은 스크롤 최상단에서 시작한다', () => {
+    render(
+      <MemoryRouter>
+        <YakuCatalog selectedYaku={getYaku('riichi')} />
+      </MemoryRouter>,
+    )
+
+    expect(window.scrollTo).toHaveBeenCalledWith({
+      top: 0,
+      left: 0,
+      behavior: 'auto',
+    })
   })
 })

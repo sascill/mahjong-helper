@@ -1,3 +1,5 @@
+import { useLayoutEffect } from 'react'
+
 import type { Yaku } from '../../domain/mahjong/yaku'
 import { YAKUS } from '../../domain/mahjong/yaku'
 import styles from './YakuCatalog.module.css'
@@ -11,6 +13,20 @@ export type YakuCatalogProps = {
 export function YakuCatalog({
   selectedYaku,
 }: YakuCatalogProps) {
+  const selectedYakuId = selectedYaku?.id
+
+  useLayoutEffect(() => {
+    if (!selectedYakuId) {
+      return
+    }
+
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'auto',
+    })
+  }, [selectedYakuId])
+
   return (
     <div className={styles.catalog}>
       {selectedYaku ? (
