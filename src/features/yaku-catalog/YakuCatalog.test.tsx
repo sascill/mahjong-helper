@@ -6,7 +6,7 @@ import { getYaku, YAKUS } from '../../domain/mahjong/yaku'
 import { YakuCatalog } from './index'
 
 describe('역 도감 기능', () => {
-  it('지원하는 모든 역을 정의된 순서로 표시한다', () => {
+  it('지원하는 모든 역을 판수와 역만으로 구분해 표시한다', () => {
     render(
       <MemoryRouter>
         <YakuCatalog />
@@ -19,9 +19,17 @@ describe('역 도감 기능', () => {
 
     expect(
       within(catalog)
-        .getAllByRole('heading', { level: 2 })
+        .getAllByRole('heading', { level: 3 })
         .map((heading) => heading.textContent),
     ).toEqual(YAKUS.map(({ name }) => name))
+
+    for (const groupName of ['1판', '2판', '3판', '6판', '역만']) {
+      expect(
+        within(catalog).getByRole('region', {
+          name: `${groupName} 역`,
+        }),
+      ).toBeInTheDocument()
+    }
 
     for (const yaku of YAKUS) {
       expect(
@@ -69,5 +77,29 @@ describe('역 도감 기능', () => {
     expect(screen.getByText('울기 2판')).toBeInTheDocument()
     expect(screen.getByText('멘젠 필수 아님')).toBeInTheDocument()
     expect(screen.getByText('치·퐁·깡 가능')).toBeInTheDocument()
+  })
+
+  it('역만의 가치와 멘젠 조건을 표시한다', () => {
+    render(
+      <MemoryRouter>
+        <YakuCatalog selectedYaku={getYaku('kokushi-musou')} />
+      </MemoryRouter>,
+    )
+
+    expect(
+      screen.getByRole('heading', {
+        name: '국사무쌍',
+        level: 1,
+      }),
+    ).toBeInTheDocument()
+    expect(screen.getByText('역만')).toBeInTheDocument()
+    expect(screen.getByText('멘젠 필수')).toBeInTheDocument()
+    expect(screen.getByText('치·퐁·깡 불가')).toBeInTheDocument()
+
+    const example = screen.getByRole('region', {
+      name: '국사무쌍 완성 예시',
+    })
+
+    expect(within(example).getAllByRole('img')).toHaveLength(14)
   })
 })

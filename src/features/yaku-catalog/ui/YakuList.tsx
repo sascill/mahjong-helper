@@ -2,18 +2,19 @@ import { Link } from 'react-router'
 
 import type { Yaku } from '../../../domain/mahjong/yaku'
 import styles from '../YakuCatalog.module.css'
+import {
+  getOpenValueLabel,
+  getPrimaryValueLabel,
+  groupYakus,
+} from '../lib/yakuPresentation'
 
 type YakuListProps = {
   yakus: readonly Yaku[]
 }
 
-function getOpenHanLabel(yaku: Yaku) {
-  return yaku.han.open === null
-    ? '멘젠 전용'
-    : `울기 ${yaku.han.open}판`
-}
-
 export function YakuList({ yakus }: YakuListProps) {
+  const groups = groupYakus(yakus)
+
   return (
     <>
       <header className={styles.header}>
@@ -28,24 +29,35 @@ export function YakuList({ yakus }: YakuListProps) {
         className={styles.list}
         aria-label="지원하는 역"
       >
-        {yakus.map((yaku) => (
-          <article className={styles.listCard} key={yaku.id}>
-            <Link
-              className={styles.listCardLink}
-              to={`/yaku/${yaku.id}`}
-              aria-label={`${yaku.name} 상세 보기`}
-            >
-              <div className={styles.listCardTitle}>
-                <h2>{yaku.name}</h2>
-                <span>멘젠 {yaku.han.closed}판</span>
-              </div>
-              <p>{yaku.summary}</p>
-              <div className={styles.listCardFooter}>
-                <span>{getOpenHanLabel(yaku)}</span>
-                <span aria-hidden="true">자세히 보기 →</span>
-              </div>
-            </Link>
-          </article>
+        {groups.map((group) => (
+          <section
+            className={styles.listGroup}
+            aria-label={`${group.label} 역`}
+            key={group.label}
+          >
+            <h2>{group.label}</h2>
+            <div className={styles.groupCards}>
+              {group.yakus.map((yaku) => (
+                <article className={styles.listCard} key={yaku.id}>
+                  <Link
+                    className={styles.listCardLink}
+                    to={`/yaku/${yaku.id}`}
+                    aria-label={`${yaku.name} 상세 보기`}
+                  >
+                    <div className={styles.listCardTitle}>
+                      <h3>{yaku.name}</h3>
+                      <span>{getPrimaryValueLabel(yaku)}</span>
+                    </div>
+                    <p>{yaku.summary}</p>
+                    <div className={styles.listCardFooter}>
+                      <span>{getOpenValueLabel(yaku)}</span>
+                      <span aria-hidden="true">자세히 보기 →</span>
+                    </div>
+                  </Link>
+                </article>
+              ))}
+            </div>
+          </section>
         ))}
       </section>
     </>

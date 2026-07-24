@@ -87,7 +87,9 @@ function RecommendationsPage() {
                   <div className={styles.recommendationTitle}>
                     <h2>{yaku.name}</h2>
                     <p className={styles.han}>
-                      멘젠 {yaku.han.closed}판
+                      {yaku.value.type === 'han'
+                        ? `멘젠 ${yaku.value.closed}판`
+                        : '역만'}
                     </p>
                   </div>
                   <p className={styles.reason}>{recommendation.reason}</p>
