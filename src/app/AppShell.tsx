@@ -50,9 +50,9 @@ function AppShell({ children }: PropsWithChildren) {
           <Link
             className={styles.brand}
             to="/yaku"
-            aria-label="Mahjong Helper 역 정보"
+            aria-label="마작 노트 역 정보"
           >
-            Mahjong Helper
+            마작 노트
           </Link>
         </div>
       </header>

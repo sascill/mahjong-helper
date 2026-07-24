@@ -8,9 +8,9 @@ import { PWA_OPTIONS } from './pwa'
 describe('PWA 설정', () => {
   it('설치와 마스커블 표시에 필요한 아이콘을 제공한다', () => {
     expect(PWA_OPTIONS.manifest).toMatchObject({
-      name: 'Mahjong Helper',
-      short_name: 'Mahjong Helper',
-      description: '역과 기본 조건을 빠르게 확인하는 리치마작 입문 도우미',
+      name: '마작 노트',
+      short_name: '마작 노트',
+      description: '역과 패, 용어를 빠르게 확인하는 리치마작 노트',
       display: 'standalone',
       start_url: '/',
       icons: [

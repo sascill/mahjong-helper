@@ -3,9 +3,9 @@ import type { VitePWAOptions } from 'vite-plugin-pwa'
 export const PWA_OPTIONS: Partial<VitePWAOptions> = {
   registerType: 'autoUpdate',
   manifest: {
-    name: 'Mahjong Helper',
-    short_name: 'Mahjong Helper',
-    description: '역과 기본 조건을 빠르게 확인하는 리치마작 입문 도우미',
+    name: '마작 노트',
+    short_name: '마작 노트',
+    description: '역과 패, 용어를 빠르게 확인하는 리치마작 노트',
     theme_color: '#185c45',
     background_color: '#f5f6f2',
     display: 'standalone',
