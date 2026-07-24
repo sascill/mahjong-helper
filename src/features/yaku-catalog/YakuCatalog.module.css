@@ -1,4 +1,10 @@
 .catalog {
+  --yaku-anchor-top: 64px;
+  --yaku-anchor-height: 58px;
+  --yaku-section-heading-top: calc(
+    var(--yaku-anchor-top) + var(--yaku-anchor-height)
+  );
+
   width: min(100%, var(--content-max-width));
   margin: 0 auto;
   padding: var(--space-6) var(--space-4) var(--space-8);
@@ -38,11 +44,11 @@
 .groupNavigation {
   position: sticky;
   z-index: 10;
-  top: 64px;
+  top: var(--yaku-anchor-top);
   display: flex;
   gap: var(--space-2);
-  margin-bottom: var(--space-6);
-  padding: var(--space-2) 0;
+  margin-bottom: 0;
+  padding: var(--space-2) 0 var(--space-4);
   background: var(--color-background);
   overflow-x: auto;
 }
@@ -80,13 +86,13 @@
 .listGroup {
   display: grid;
   gap: var(--space-4);
-  scroll-margin-top: 132px;
+  scroll-margin-top: calc(var(--yaku-section-heading-top) + var(--space-4));
 }
 
 .listGroupHeading {
   position: sticky;
-  z-index: 5;
-  top: 120px;
+  z-index: 9;
+  top: var(--yaku-section-heading-top);
   margin: 0;
   padding: var(--space-2) 0;
   border-bottom: 2px solid var(--color-primary-strong);
