@@ -73,15 +73,6 @@ function AppShell({ children }: PropsWithChildren) {
           </NavLink>
           <NavLink
             className={({ isActive }) => getNavigationClassName(isActive)}
-            to="/hand"
-          >
-            <span className={styles.navigationIcon} aria-hidden="true">
-              ▦
-            </span>
-            손패
-          </NavLink>
-          <NavLink
-            className={({ isActive }) => getNavigationClassName(isActive)}
             to="/yaku"
           >
             <span className={styles.navigationIcon} aria-hidden="true">

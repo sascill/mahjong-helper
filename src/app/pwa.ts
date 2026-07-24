@@ -5,7 +5,7 @@ export const PWA_OPTIONS: Partial<VitePWAOptions> = {
   manifest: {
     name: 'Mahjong Helper',
     short_name: 'Mahjong Helper',
-    description: '첫 손패에서 목표로 삼을 역을 추천하는 리치마작 입문 도우미',
+    description: '역과 기본 조건을 빠르게 확인하는 리치마작 입문 도우미',
     theme_color: '#185c45',
     background_color: '#f5f6f2',
     display: 'standalone',

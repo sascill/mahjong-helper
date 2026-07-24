@@ -52,7 +52,6 @@
   margin-top: var(--space-6);
 }
 
-.primaryLink,
 .secondaryLink {
   display: inline-flex;
   min-height: 52px;
@@ -64,13 +63,6 @@
   text-decoration: none;
 }
 
-.primaryLink {
-  border: 1px solid #d63856;
-  border-bottom: 4px solid var(--color-accent-pressed);
-  background: var(--color-accent);
-  color: var(--color-on-primary);
-}
-
 .secondaryLink {
   border: 1px solid rgb(255 255 255 / 48%);
   border-bottom: 4px solid #001f14;
@@ -78,74 +70,9 @@
   color: var(--color-on-primary);
 }
 
-.primaryLink:active,
 .secondaryLink:active {
   translate: 0 2px;
   border-bottom-width: 2px;
-}
-
-.guide {
-  margin-top: var(--space-6);
-  padding: var(--space-6);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-card);
-  background: var(--color-surface);
-}
-
-.guideLabel {
-  margin: 0 0 var(--space-2);
-  color: var(--color-accent);
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-}
-
-.guide h2 {
-  margin: 0;
-  color: var(--color-primary-strong);
-  font-size: 1.25rem;
-  letter-spacing: -0.03em;
-}
-
-.steps {
-  display: grid;
-  gap: var(--space-4);
-  margin: var(--space-6) 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.step {
-  display: grid;
-  grid-template-columns: 32px minmax(0, 1fr);
-  gap: var(--space-3);
-  align-items: start;
-}
-
-.stepNumber {
-  display: grid;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--color-primary-soft);
-  color: var(--color-primary-strong);
-  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
-  font-size: 0.875rem;
-  font-weight: 800;
-  place-items: center;
-}
-
-.step strong {
-  display: block;
-  margin-top: 2px;
-  color: var(--color-text);
-}
-
-.step p {
-  margin: var(--space-1) 0 0;
-  color: var(--color-text-muted);
-  font-size: 0.875rem;
-  line-height: 1.55;
 }
 
 @media (min-width: 640px) {

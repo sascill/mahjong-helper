@@ -4,7 +4,6 @@ import {
   screen,
   within,
 } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router'
 import { describe, expect, it } from 'vitest'
 import App from './App'
@@ -75,6 +74,14 @@ describe('애플리케이션 진입점', () => {
     expect(
       screen.getByRole('link', { name: '역 찾아보기' }),
     ).toHaveAttribute('href', '/yaku')
+    expect(
+      screen.queryByRole('link', { name: '첫 손패 분석하기' }),
+    ).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('heading', {
+        name: '목표를 정하고 패에 집중하기',
+      }),
+    ).not.toBeInTheDocument()
   })
 
   it('공통 헤더와 주요 메뉴를 표시한다', () => {
@@ -94,29 +101,11 @@ describe('애플리케이션 진입점', () => {
       within(navigation).getByRole('link', { name: '홈' }),
     ).toHaveAttribute('href', '/')
     expect(
-      within(navigation).getByRole('link', { name: '손패' }),
-    ).toHaveAttribute('href', '/hand')
+      within(navigation).queryByRole('link', { name: '손패' }),
+    ).not.toBeInTheDocument()
     expect(
       within(navigation).getByRole('link', { name: '역 도감' }),
     ).toHaveAttribute('href', '/yaku')
-  })
-
-  it('홈 화면에서 손패 선택 화면으로 이동한다', async () => {
-    const user = userEvent.setup()
-
-    render(
-      <MemoryRouter>
-        <App />
-      </MemoryRouter>,
-    )
-
-    await user.click(
-      screen.getByRole('link', { name: '첫 손패 분석하기' }),
-    )
-
-    expect(
-      screen.getByRole('heading', { name: '첫 손패를 선택하세요' }),
-    ).toBeInTheDocument()
   })
 
   it('손패를 분석하고 가까운 역을 표시한다', () => {

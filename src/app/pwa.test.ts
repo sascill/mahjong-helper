@@ -10,6 +10,7 @@ describe('PWA 설정', () => {
     expect(PWA_OPTIONS.manifest).toMatchObject({
       name: 'Mahjong Helper',
       short_name: 'Mahjong Helper',
+      description: '역과 기본 조건을 빠르게 확인하는 리치마작 입문 도우미',
       display: 'standalone',
       start_url: '/',
       icons: [
