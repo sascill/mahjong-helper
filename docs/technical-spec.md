@@ -15,6 +15,7 @@ Mahjong Helper의 기술 구성, 프로젝트 구조, 레이어 책임과 검증
 - Vitest
 - React Testing Library
 - vite-plugin-pwa
+- Wrangler
 - CSS Modules
 - ESLint
 - npm
@@ -238,10 +239,24 @@ React Testing Library를 사용한다.
 ## PWA
 
 - 웹 앱 매니페스트를 제공한다.
+- `192x192`, `512x512` 일반 아이콘과 마스커블 아이콘을 제공한다.
 - 서비스 워커를 등록한다.
 - 애플리케이션 실행에 필요한 정적 파일을 캐시한다.
 - 네트워크 없이 이미 설치된 앱의 기본 화면을 실행할 수 있어야 한다.
+- 새 서비스 워커가 확인되면 자동으로 갱신한다.
 - 카메라 기능은 MVP에 포함하지 않는다.
+
+## 배포
+
+Cloudflare Workers의 정적 에셋 기능을 사용한다.
+
+- `wrangler.jsonc`에서 Worker 이름, 정적 에셋 경로와 SPA 폴백을 관리한다.
+- Worker 이름은 `mahjong-helper`를 사용한다.
+- 정적 에셋 경로는 `dist`다.
+- 존재하지 않는 화면 경로는 `index.html`로 연결한다.
+- 로컬 수동 배포는 `npm run deploy`로 실행한다.
+- 실제 업로드 없이 설정과 번들을 검증할 때는 `npm run deploy:dry-run`을 사용한다.
+- 자동 빌드 후 운영 반영을 수동으로 결정하려면 Cloudflare의 배포 명령을 `npx wrangler versions upload`로 설정한다.
 
 ## 프로젝트 명령
 
@@ -252,6 +267,8 @@ npm run test:watch
 npm run typecheck
 npm run lint
 npm run build
+npm run deploy
+npm run deploy:dry-run
 ```
 
 각 명령은 다음 역할을 가진다.
@@ -262,6 +279,8 @@ npm run build
 - `typecheck`: TypeScript 타입 검사
 - `lint`: 정적 코드 검사
 - `build`: 프로덕션 빌드
+- `deploy`: 프로덕션 빌드 후 Cloudflare Worker에 수동 배포
+- `deploy:dry-run`: 프로덕션 빌드 후 Cloudflare 배포 설정과 업로드 대상을 로컬에서 검증
 
 ## 완료 검증
 
@@ -272,4 +291,5 @@ npm run test
 npm run typecheck
 npm run lint
 npm run build
+npm run deploy:dry-run
 ```
