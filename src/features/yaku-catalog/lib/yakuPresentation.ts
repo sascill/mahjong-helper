@@ -108,8 +108,12 @@ export const getListConditionLabel = (yaku: Yaku): string => {
     return yaku.value.open ? '울기 가능' : '멘젠'
   }
 
-  return yaku.value.open === null
-    ? '멘젠'
+  if (yaku.value.open === null) {
+    return '멘젠'
+  }
+
+  return yaku.value.open === yaku.value.closed
+    ? '울기 가능'
     : `울면 ${yaku.value.open}판`
 }
 

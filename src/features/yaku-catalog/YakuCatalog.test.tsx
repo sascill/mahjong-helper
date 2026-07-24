@@ -1,10 +1,18 @@
 import { render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
-import { describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { getYaku, YAKUS } from '../../domain/mahjong/yaku'
 import { YakuCatalog } from './index'
 import styles from './YakuCatalog.module.css'
+
+beforeEach(() => {
+  vi.spyOn(window, 'scrollTo').mockImplementation(() => undefined)
+})
+
+afterEach(() => {
+  vi.restoreAllMocks()
+})
 
 describe('역 정보 기능', () => {
   it('지원하는 모든 역을 판수와 역만으로 구분해 표시한다', () => {
@@ -92,6 +100,9 @@ describe('역 정보 기능', () => {
     expect(within(catalog).queryByText('멘젠 전용')).not.toBeInTheDocument()
     expect(within(catalog).queryByText('자세히 보기 →')).not.toBeInTheDocument()
 
+    const oneHanGroup = within(catalog).getByRole('region', {
+      name: '1판 역',
+    })
     const riichiCard = within(catalog).getByRole('link', {
       name: '리치 상세 보기',
     })
@@ -102,8 +113,9 @@ describe('역 정보 기능', () => {
       name: '혼일색 상세 보기',
     })
 
+    expect(within(oneHanGroup).queryByText('울면 1판')).not.toBeInTheDocument()
     expect(within(riichiCard).getByText('멘젠')).toBeInTheDocument()
-    expect(within(tanyaoCard).getByText('울면 1판')).toBeInTheDocument()
+    expect(within(tanyaoCard).getByText('울기 가능')).toBeInTheDocument()
     expect(within(honitsuCard).getByText('울면 2판')).toBeInTheDocument()
 
     const compactSummaries = Array.from(
@@ -178,5 +190,19 @@ describe('역 정보 기능', () => {
     })
 
     expect(within(example).getAllByRole('img')).toHaveLength(14)
+  })
+
+  it('역 상세 화면은 스크롤 최상단에서 시작한다', () => {
+    render(
+      <MemoryRouter>
+        <YakuCatalog selectedYaku={getYaku('riichi')} />
+      </MemoryRouter>,
+    )
+
+    expect(window.scrollTo).toHaveBeenCalledWith({
+      top: 0,
+      left: 0,
+      behavior: 'auto',
+    })
   })
 })
