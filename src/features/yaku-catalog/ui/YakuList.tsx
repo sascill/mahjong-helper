@@ -6,7 +6,6 @@ import {
   getCompactYakuSummary,
   getYakuGroupAnchorId,
   getOpenValueLabel,
-  getPrimaryValueLabel,
   groupYakus,
 } from '../lib/yakuPresentation'
 
@@ -49,7 +48,7 @@ export function YakuList({ yakus }: YakuListProps) {
             id={getYakuGroupAnchorId(group.label)}
             key={group.label}
           >
-            <h2>{group.label}</h2>
+            <h2 className={styles.listGroupHeading}>{group.label}</h2>
             <div className={styles.groupCards}>
               {group.yakus.map((yaku) => (
                 <article className={styles.listCard} key={yaku.id}>
@@ -60,7 +59,6 @@ export function YakuList({ yakus }: YakuListProps) {
                   >
                     <div className={styles.listCardTitle}>
                       <h3>{yaku.name}</h3>
-                      <span>{getPrimaryValueLabel(yaku)}</span>
                     </div>
                     <p>{getCompactYakuSummary(yaku)}</p>
                     <div className={styles.listCardFooter}>

@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest'
 
 import { getYaku, YAKUS } from '../../domain/mahjong/yaku'
 import { YakuCatalog } from './index'
+import styles from './YakuCatalog.module.css'
 
 describe('역 정보 기능', () => {
   it('지원하는 모든 역을 판수와 역만으로 구분해 표시한다', () => {
@@ -51,11 +52,14 @@ describe('역 정보 기능', () => {
     ).toEqual(YAKUS.map(({ name }) => name))
 
     for (const groupName of ['1판', '2판', '3판', '6판', '역만']) {
+      const group = within(catalog).getByRole('region', {
+        name: `${groupName} 역`,
+      })
+
+      expect(group).toBeInTheDocument()
       expect(
-        within(catalog).getByRole('region', {
-          name: `${groupName} 역`,
-        }),
-      ).toBeInTheDocument()
+        within(group).getByRole('heading', { name: groupName, level: 2 }),
+      ).toHaveClass(styles.listGroupHeading)
     }
 
     for (const [label, href] of groupAnchors) {
@@ -82,10 +86,14 @@ describe('역 정보 기능', () => {
         '멘젠 텐파이 상태에서 리치를 선언하고 화료하는 역입니다.',
       ),
     ).not.toBeInTheDocument()
+    expect(within(catalog).queryByText('멘젠 1판')).not.toBeInTheDocument()
+    expect(within(catalog).queryByText('멘젠 2판')).not.toBeInTheDocument()
+    expect(within(catalog).getAllByText('울기 1판').length).toBeGreaterThan(0)
+    expect(within(catalog).getAllByText('멘젠 전용').length).toBeGreaterThan(0)
 
-    const compactSummaries = within(catalog)
-      .getAllByText((content, element) => element?.tagName === 'P' && content !== '')
-      .map((paragraph) => paragraph.textContent ?? '')
+    const compactSummaries = Array.from(
+      catalog.querySelectorAll('article p'),
+    ).map((paragraph) => paragraph.textContent ?? '')
 
     expect(compactSummaries).toHaveLength(YAKUS.length)
     for (const compactSummary of compactSummaries) {
