@@ -18,11 +18,7 @@ export function YakuList({ yakus }: YakuListProps) {
   return (
     <>
       <header className={styles.header}>
-        <p className={styles.eyebrow}>리치마작 역 정보</p>
         <h1>역 도감</h1>
-        <p className={styles.description}>
-          현재 지원하는 역의 조건과 완성 형태를 살펴보세요.
-        </p>
       </header>
 
       <section

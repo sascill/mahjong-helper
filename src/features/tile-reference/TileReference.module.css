@@ -8,26 +8,12 @@
   margin-bottom: var(--space-6);
 }
 
-.eyebrow {
-  margin: 0 0 var(--space-2);
-  color: var(--color-accent);
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-}
-
 .header h1 {
   margin: 0;
   color: var(--color-primary-strong);
   font-size: clamp(1.75rem, 8vw, 2.5rem);
   letter-spacing: -0.045em;
   line-height: 1.15;
-}
-
-.description {
-  margin: var(--space-3) 0 0;
-  color: var(--color-text-muted);
-  line-height: 1.65;
 }
 
 .groups {
@@ -53,13 +39,6 @@
   margin: 0;
   color: var(--color-primary-strong);
   font-size: 1.1rem;
-}
-
-.groupHeader p {
-  margin: 0;
-  color: var(--color-text-muted);
-  font-size: 0.875rem;
-  line-height: 1.55;
 }
 
 .tileGrid {

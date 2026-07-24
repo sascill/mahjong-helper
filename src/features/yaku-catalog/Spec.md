@@ -24,6 +24,8 @@ function YakuCatalog(props: YakuCatalogProps): JSX.Element;
 
 역 목록은 `YAKUS`에 정의된 순서를 유지하면서 다음 구분으로 표시한다.
 
+화면 상단은 제목만 표시하고, 별도의 보조 설명문은 노출하지 않는다.
+
 - 1판
 - 2판
 - 3판

@@ -10,6 +10,10 @@ describe('룰 정보 기능', () => {
     expect(
       screen.getByRole('heading', { name: '룰 정보', level: 1 }),
     ).toBeInTheDocument()
+    expect(screen.queryByText('기본 룰')).not.toBeInTheDocument()
+    expect(
+      screen.queryByText('게임 중 자주 헷갈리는 조건만 짧게 확인하세요.'),
+    ).not.toBeInTheDocument()
 
     for (const ruleTitle of [
       '역이 있어야 화료할 수 있습니다',

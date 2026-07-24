@@ -48,12 +48,22 @@ describe('패 읽는 법 기능', () => {
     expect(
       screen.getByRole('heading', { name: '패 읽는 법', level: 1 }),
     ).toBeInTheDocument()
+    expect(screen.queryByText('패 읽기')).not.toBeInTheDocument()
+    expect(
+      screen.queryByText(
+        '패 모양은 그대로 보고, 아래 이름으로 읽는 법만 확인하세요.',
+      ),
+    ).not.toBeInTheDocument()
 
     for (const groupName of ['만수', '통수', '삭수', '자패']) {
       expect(
         screen.getByRole('region', { name: `${groupName} 읽는 법` }),
       ).toBeInTheDocument()
     }
+
+    expect(
+      screen.queryByText('한자 숫자와 만 자가 있는 패입니다.'),
+    ).not.toBeInTheDocument()
 
     const reference = screen.getByRole('main')
 

@@ -17,6 +17,11 @@ describe('역 도감 기능', () => {
       name: '지원하는 역',
     })
 
+    expect(screen.queryByText('리치마작 역 정보')).not.toBeInTheDocument()
+    expect(
+      screen.queryByText('현재 지원하는 역의 조건과 완성 형태를 살펴보세요.'),
+    ).not.toBeInTheDocument()
+
     expect(
       within(catalog)
         .getAllByRole('heading', { level: 3 })

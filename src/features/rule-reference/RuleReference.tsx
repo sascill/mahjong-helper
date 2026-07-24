@@ -23,11 +23,7 @@ export function RuleReference() {
   return (
     <main className={styles.reference}>
       <header className={styles.header}>
-        <p className={styles.eyebrow}>기본 룰</p>
         <h1>룰 정보</h1>
-        <p className={styles.description}>
-          게임 중 자주 헷갈리는 조건만 짧게 확인하세요.
-        </p>
       </header>
 
       <section className={styles.rules} aria-label="기본 룰 목록">
