@@ -5,8 +5,9 @@ import {
 } from '../../hand';
 import {
   calculateSevenPairsDistance,
-  calculateStandardDistance,
-  type WinningShapeRules,
+  calculateStandardShapeDistance,
+  createSequenceMeld,
+  createTripletMeld,
 } from '../lib/distance';
 import type { YakuEvaluation } from '../types';
 
@@ -21,20 +22,6 @@ const SUIT_OPTIONS: {
   { label: '삭수', suit: 'sou' },
 ];
 
-const createHonitsuRules = (
-  suit: NumberSuit,
-): WinningShapeRules => ({
-  allowedTileIds: TILES.filter(
-    (tile) => tile.suit === suit || tile.suit === 'honor',
-  ).map(({ id }) => id),
-  sequenceStartIds: TILES.filter(
-    (tile) =>
-      tile.suit === suit &&
-      typeof tile.value === 'number' &&
-      tile.value <= 7,
-  ).map(({ id }) => id),
-});
-
 export function evaluateHonitsu(input: HandInput): YakuEvaluation {
   let bestEvaluation:
     | {
@@ -45,22 +32,41 @@ export function evaluateHonitsu(input: HandInput): YakuEvaluation {
     | undefined;
 
   for (const option of SUIT_OPTIONS) {
-    const rules = createHonitsuRules(option.suit);
-    const allowedTileIds = new Set(rules.allowedTileIds);
-    const standardDistance = calculateStandardDistance(
+    const suitTileIds = TILES.filter(
+      (tile) => tile.suit === option.suit,
+    ).map(({ id }) => id);
+    const honorTileIds = TILES.filter(
+      (tile) => tile.suit === 'honor',
+    ).map(({ id }) => id);
+    const allowedTileIds = [...suitTileIds, ...honorTileIds];
+    const allowedTileIdSet = new Set(allowedTileIds);
+    const requiredTileSets = [suitTileIds, honorTileIds];
+    const standardDistance = calculateStandardShapeDistance(
       input.tiles,
-      rules,
+      {
+        meldCandidates: [
+          ...allowedTileIds.map(createTripletMeld),
+          ...Array.from(
+            { length: 7 },
+            (_, index) =>
+              createSequenceMeld(option.suit, index + 1),
+          ),
+        ],
+        pairTileIds: allowedTileIds,
+        requiredTileSets,
+      },
     );
     const sevenPairsDistance = calculateSevenPairsDistance(
       input.tiles,
-      rules.allowedTileIds,
+      allowedTileIds,
+      { requiredTileSets },
     );
     const distance = Math.min(
       standardDistance,
       sevenPairsDistance,
     );
     const relevantTileCount = input.tiles.filter(
-      (tileId) => allowedTileIds.has(tileId),
+      (tileId) => allowedTileIdSet.has(tileId),
     ).length;
 
     if (!bestEvaluation || distance < bestEvaluation.distance) {
