@@ -15,6 +15,14 @@ export type YakuGroup = {
   yakus: Yaku[]
 }
 
+const YAKU_GROUP_ANCHOR_IDS: Record<YakuGroupLabel, string> = {
+  '1판': 'yaku-1',
+  '2판': 'yaku-2',
+  '3판': 'yaku-3',
+  '6판': 'yaku-6',
+  '역만': 'yaku-yakuman',
+}
+
 const getYakuGroupLabel = (yaku: Yaku): YakuGroupLabel => {
   if (yaku.value.type === 'yakuman') {
     return '역만'
@@ -39,6 +47,9 @@ export const groupYakus = (yakus: readonly Yaku[]): YakuGroup[] =>
     label,
     yakus: yakus.filter((yaku) => getYakuGroupLabel(yaku) === label),
   }))
+
+export const getYakuGroupAnchorId = (label: YakuGroupLabel): string =>
+  YAKU_GROUP_ANCHOR_IDS[label]
 
 export const getPrimaryValueLabel = (yaku: Yaku): string =>
   yaku.value.type === 'yakuman'

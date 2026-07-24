@@ -5,6 +5,7 @@ import {
   getTile,
   getTileLabel,
 } from '../../shared/lib/tilePresentation'
+import { MahjongTile } from '../../shared/ui'
 import { useHandSelection } from './model/useHandSelection'
 import styles from './HandSelection.module.css'
 import TilePalette from './ui/TilePalette'
@@ -54,7 +55,7 @@ function HandSelection({ onAnalyze }: HandSelectionProps) {
                   aria-label={`선택한 ${tileLabel} 제거`}
                   onClick={() => selection.removeTile(index)}
                 >
-                  {tile.symbol}
+                  <MahjongTile tileId={tileId} />
                 </button>
               )
             })

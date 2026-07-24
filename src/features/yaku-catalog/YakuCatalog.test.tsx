@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest'
 import { getYaku, YAKUS } from '../../domain/mahjong/yaku'
 import { YakuCatalog } from './index'
 
-describe('역 도감 기능', () => {
+describe('역 정보 기능', () => {
   it('지원하는 모든 역을 판수와 역만으로 구분해 표시한다', () => {
     render(
       <MemoryRouter>
@@ -13,9 +13,36 @@ describe('역 도감 기능', () => {
       </MemoryRouter>,
     )
 
+    expect(
+      screen.getByRole('heading', { name: '역 정보', level: 1 }),
+    ).toBeInTheDocument()
+    expect(screen.queryByText('역 도감')).not.toBeInTheDocument()
+
+    const groupNavigation = screen.getByRole('navigation', {
+      name: '판수별 역 바로가기',
+    })
+    const groupAnchors = [
+      ['1판', '#yaku-1'],
+      ['2판', '#yaku-2'],
+      ['3판', '#yaku-3'],
+      ['6판', '#yaku-6'],
+      ['역만', '#yaku-yakuman'],
+    ] as const
+
+    for (const [label, href] of groupAnchors) {
+      expect(
+        within(groupNavigation).getByRole('link', { name: label }),
+      ).toHaveAttribute('href', href)
+    }
+
     const catalog = screen.getByRole('region', {
       name: '지원하는 역',
     })
+
+    expect(screen.queryByText('리치마작 역 정보')).not.toBeInTheDocument()
+    expect(
+      screen.queryByText('현재 지원하는 역의 조건과 완성 형태를 살펴보세요.'),
+    ).not.toBeInTheDocument()
 
     expect(
       within(catalog)
@@ -29,6 +56,14 @@ describe('역 도감 기능', () => {
           name: `${groupName} 역`,
         }),
       ).toBeInTheDocument()
+    }
+
+    for (const [label, href] of groupAnchors) {
+      expect(
+        within(catalog).getByRole('region', {
+          name: `${label} 역`,
+        }),
+      ).toHaveAttribute('id', href.slice(1))
     }
 
     for (const yaku of YAKUS) {

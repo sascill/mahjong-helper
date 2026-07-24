@@ -63,12 +63,26 @@
 - 스펙 경로: `src/features/hand-analysis/Spec.md`
 - 구현 경로: `src/features/hand-analysis/`
 
-### 역 도감
+### 역 정보
 
 역 목록과 상세 정보를 탐색하는 기능이다.
 
 - 스펙 경로: `src/features/yaku-catalog/Spec.md`
 - 구현 경로: `src/features/yaku-catalog/`
+
+### 패 읽는 법
+
+만수·통수·삭수·자패의 이름을 표 형태로 확인하는 기능이다.
+
+- 스펙 경로: `src/features/tile-reference/Spec.md`
+- 구현 경로: `src/features/tile-reference/`
+
+### 룰 정보
+
+초보자가 게임 중 자주 확인하는 기본 룰을 정리하는 기능이다.
+
+- 스펙 경로: `src/features/rule-reference/Spec.md`
+- 구현 경로: `src/features/rule-reference/`
 
 ## 문서 관리 규칙
 

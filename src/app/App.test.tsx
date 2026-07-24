@@ -4,7 +4,6 @@ import {
   screen,
   within,
 } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router'
 import { describe, expect, it } from 'vitest'
 import App from './App'
@@ -62,7 +61,7 @@ const completeHandInput = (tileLabels: string[]) => {
 }
 
 describe('애플리케이션 진입점', () => {
-  it('홈 화면을 표시한다', () => {
+  it('루트 경로에서 역 정보로 이동한다', () => {
     render(
       <MemoryRouter>
         <App />
@@ -70,11 +69,8 @@ describe('애플리케이션 진입점', () => {
     )
 
     expect(
-      screen.getByRole('heading', { name: 'Mahjong Helper' }),
+      screen.getByRole('heading', { name: '역 정보', level: 1 }),
     ).toBeInTheDocument()
-    expect(
-      screen.getByRole('link', { name: '역 찾아보기' }),
-    ).toHaveAttribute('href', '/yaku')
   })
 
   it('공통 헤더와 주요 메뉴를 표시한다', () => {
@@ -84,39 +80,56 @@ describe('애플리케이션 진입점', () => {
       </MemoryRouter>,
     )
 
-    expect(screen.getByRole('banner')).toBeInTheDocument()
+    expect(
+      screen.getByRole('banner', { name: '애플리케이션 헤더' }),
+    ).toBeInTheDocument()
 
     const navigation = screen.getByRole('navigation', {
       name: '주요 메뉴',
     })
 
     expect(
-      within(navigation).getByRole('link', { name: '홈' }),
-    ).toHaveAttribute('href', '/')
-    expect(
-      within(navigation).getByRole('link', { name: '손패' }),
-    ).toHaveAttribute('href', '/hand')
-    expect(
-      within(navigation).getByRole('link', { name: '역 도감' }),
+      within(navigation).getByRole('link', { name: '역' }),
     ).toHaveAttribute('href', '/yaku')
+    expect(
+      within(navigation).getByRole('link', { name: '패' }),
+    ).toHaveAttribute('href', '/tiles')
+    expect(
+      within(navigation).getByRole('link', { name: '룰' }),
+    ).toHaveAttribute('href', '/rules')
+    expect(
+      within(navigation).queryByRole('link', { name: '손패' }),
+    ).not.toBeInTheDocument()
+    expect(
+      within(navigation).queryByRole('link', { name: '홈' }),
+    ).not.toBeInTheDocument()
   })
 
-  it('홈 화면에서 손패 선택 화면으로 이동한다', async () => {
-    const user = userEvent.setup()
-
+  it('패 읽는 법 화면을 표시한다', () => {
     render(
-      <MemoryRouter>
+      <MemoryRouter initialEntries={['/tiles']}>
         <App />
       </MemoryRouter>,
     )
 
-    await user.click(
-      screen.getByRole('link', { name: '첫 손패 분석하기' }),
+    expect(
+      screen.getByRole('heading', { name: '패 읽는 법', level: 1 }),
+    ).toBeInTheDocument()
+    expect(screen.getByText('1만')).toBeInTheDocument()
+    expect(screen.getByText('백')).toBeInTheDocument()
+  })
+
+  it('룰 정보 화면을 표시한다', () => {
+    render(
+      <MemoryRouter initialEntries={['/rules']}>
+        <App />
+      </MemoryRouter>,
     )
 
     expect(
-      screen.getByRole('heading', { name: '첫 손패를 선택하세요' }),
+      screen.getByRole('heading', { name: '룰 정보', level: 1 }),
     ).toBeInTheDocument()
+    expect(screen.getByText('도라는 역이 아닙니다')).toBeInTheDocument()
   })
 
   it('손패를 분석하고 가까운 역을 표시한다', () => {
@@ -212,7 +225,7 @@ describe('애플리케이션 진입점', () => {
     )
 
     expect(
-      screen.getByRole('heading', { name: '역 도감', level: 1 }),
+      screen.getByRole('heading', { name: '역 정보', level: 1 }),
     ).toBeInTheDocument()
 
     fireEvent.click(
@@ -253,7 +266,7 @@ describe('애플리케이션 진입점', () => {
     )
 
     expect(
-      screen.getByRole('heading', { name: '역 도감', level: 1 }),
+      screen.getByRole('heading', { name: '역 정보', level: 1 }),
     ).toBeInTheDocument()
   })
 })

@@ -49,8 +49,8 @@ function AppShell({ children }: PropsWithChildren) {
           )}
           <Link
             className={styles.brand}
-            to="/"
-            aria-label="Mahjong Helper 홈"
+            to="/yaku"
+            aria-label="Mahjong Helper 역 정보"
           >
             Mahjong Helper
           </Link>
@@ -63,31 +63,30 @@ function AppShell({ children }: PropsWithChildren) {
         <div className={styles.navigationInner}>
           <NavLink
             className={({ isActive }) => getNavigationClassName(isActive)}
-            end
-            to="/"
-          >
-            <span className={styles.navigationIcon} aria-hidden="true">
-              ⌂
-            </span>
-            홈
-          </NavLink>
-          <NavLink
-            className={({ isActive }) => getNavigationClassName(isActive)}
-            to="/hand"
-          >
-            <span className={styles.navigationIcon} aria-hidden="true">
-              ▦
-            </span>
-            손패
-          </NavLink>
-          <NavLink
-            className={({ isActive }) => getNavigationClassName(isActive)}
             to="/yaku"
           >
             <span className={styles.navigationIcon} aria-hidden="true">
               ▤
             </span>
-            역 도감
+            역
+          </NavLink>
+          <NavLink
+            className={({ isActive }) => getNavigationClassName(isActive)}
+            to="/tiles"
+          >
+            <span className={styles.navigationIcon} aria-hidden="true">
+              ▦
+            </span>
+            패
+          </NavLink>
+          <NavLink
+            className={({ isActive }) => getNavigationClassName(isActive)}
+            to="/rules"
+          >
+            <span className={styles.navigationIcon} aria-hidden="true">
+              ※
+            </span>
+            룰
           </NavLink>
         </div>
       </nav>

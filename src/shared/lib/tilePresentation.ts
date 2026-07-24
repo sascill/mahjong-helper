@@ -39,3 +39,6 @@ export const getTile = (tileId: TileId): Tile => {
 
   return tile
 }
+
+export const getTileImageSrc = (tile: Tile): string =>
+  `/tiles/${tile.id}.png`

@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import type { Yaku } from '../../../domain/mahjong/yaku'
 import styles from '../YakuCatalog.module.css'
 import {
+  getYakuGroupAnchorId,
   getOpenValueLabel,
   getPrimaryValueLabel,
   groupYakus,
@@ -18,12 +19,23 @@ export function YakuList({ yakus }: YakuListProps) {
   return (
     <>
       <header className={styles.header}>
-        <p className={styles.eyebrow}>리치마작 역 정보</p>
-        <h1>역 도감</h1>
-        <p className={styles.description}>
-          현재 지원하는 역의 조건과 완성 형태를 살펴보세요.
-        </p>
+        <h1>역 정보</h1>
       </header>
+
+      <nav
+        className={styles.groupNavigation}
+        aria-label="판수별 역 바로가기"
+      >
+        {groups.map((group) => (
+          <a
+            className={styles.groupNavigationLink}
+            href={`#${getYakuGroupAnchorId(group.label)}`}
+            key={group.label}
+          >
+            {group.label}
+          </a>
+        ))}
+      </nav>
 
       <section
         className={styles.list}
@@ -33,6 +45,7 @@ export function YakuList({ yakus }: YakuListProps) {
           <section
             className={styles.listGroup}
             aria-label={`${group.label} 역`}
+            id={getYakuGroupAnchorId(group.label)}
             key={group.label}
           >
             <h2>{group.label}</h2>

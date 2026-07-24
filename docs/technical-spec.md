@@ -32,9 +32,10 @@ src/
 │  ├─ App.tsx
 │  └─ router.tsx
 ├─ pages/
-│  ├─ home/
 │  ├─ hand-select/
 │  ├─ recommendations/
+│  ├─ tile-reference/
+│  ├─ rule-reference/
 │  ├─ yaku-list/
 │  └─ yaku-detail/
 ├─ features/
@@ -46,7 +47,11 @@ src/
 │  │  └─ lib/
 │  ├─ hand-analysis/
 │  │  └─ Spec.md
-│  └─ yaku-catalog/
+│  ├─ yaku-catalog/
+│  │  └─ Spec.md
+│  ├─ tile-reference/
+│  │  └─ Spec.md
+│  └─ rule-reference/
 │     └─ Spec.md
 ├─ domain/
 │  └─ mahjong/
@@ -185,7 +190,7 @@ features
 
 ```text
 /
-→ 홈
+→ 역 목록으로 이동
 
 /hand
 → 손패 선택
@@ -198,6 +203,12 @@ features
 
 /yaku/:yakuId
 → 역 상세
+
+/tiles
+→ 패 읽는 법
+
+/rules
+→ 룰 정보
 ```
 
 추천 결과 없이 `/recommendations`에 직접 접근하면 `/hand`로 이동한다.
