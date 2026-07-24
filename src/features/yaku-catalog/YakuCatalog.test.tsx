@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest'
 
 import { getYaku, YAKUS } from '../../domain/mahjong/yaku'
 import { YakuCatalog } from './index'
+import styles from './YakuCatalog.module.css'
 
 describe('역 정보 기능', () => {
   it('지원하는 모든 역을 판수와 역만으로 구분해 표시한다', () => {
@@ -51,11 +52,14 @@ describe('역 정보 기능', () => {
     ).toEqual(YAKUS.map(({ name }) => name))
 
     for (const groupName of ['1판', '2판', '3판', '6판', '역만']) {
+      const group = within(catalog).getByRole('region', {
+        name: `${groupName} 역`,
+      })
+
+      expect(group).toBeInTheDocument()
       expect(
-        within(catalog).getByRole('region', {
-          name: `${groupName} 역`,
-        }),
-      ).toBeInTheDocument()
+        within(group).getByRole('heading', { name: groupName, level: 2 }),
+      ).toHaveClass(styles.listGroupHeading)
     }
 
     for (const [label, href] of groupAnchors) {
@@ -72,6 +76,44 @@ describe('역 정보 기능', () => {
           name: `${yaku.name} 상세 보기`,
         }),
       ).toHaveAttribute('href', `/yaku/${yaku.id}`)
+    }
+
+    expect(
+      within(catalog).getByText('리치 선언 후 화료'),
+    ).toBeInTheDocument()
+    expect(
+      within(catalog).queryByText(
+        '멘젠 텐파이 상태에서 리치를 선언하고 화료하는 역입니다.',
+      ),
+    ).not.toBeInTheDocument()
+    expect(within(catalog).queryByText('멘젠 1판')).not.toBeInTheDocument()
+    expect(within(catalog).queryByText('멘젠 2판')).not.toBeInTheDocument()
+    expect(within(catalog).queryByText('울기 1판')).not.toBeInTheDocument()
+    expect(within(catalog).queryByText('멘젠 전용')).not.toBeInTheDocument()
+    expect(within(catalog).queryByText('자세히 보기 →')).not.toBeInTheDocument()
+
+    const riichiCard = within(catalog).getByRole('link', {
+      name: '리치 상세 보기',
+    })
+    const tanyaoCard = within(catalog).getByRole('link', {
+      name: '탕야오 상세 보기',
+    })
+    const honitsuCard = within(catalog).getByRole('link', {
+      name: '혼일색 상세 보기',
+    })
+
+    expect(within(riichiCard).getByText('멘젠')).toBeInTheDocument()
+    expect(within(tanyaoCard).getByText('울면 1판')).toBeInTheDocument()
+    expect(within(honitsuCard).getByText('울면 2판')).toBeInTheDocument()
+
+    const compactSummaries = Array.from(
+      catalog.querySelectorAll('article p'),
+    ).map((paragraph) => paragraph.textContent ?? '')
+
+    expect(compactSummaries).toHaveLength(YAKUS.length)
+    for (const compactSummary of compactSummaries) {
+      expect(compactSummary.length).toBeLessThanOrEqual(18)
+      expect(compactSummary).not.toMatch(/입니다\.?$/)
     }
   })
 

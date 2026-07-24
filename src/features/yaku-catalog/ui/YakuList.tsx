@@ -3,9 +3,9 @@ import { Link } from 'react-router'
 import type { Yaku } from '../../../domain/mahjong/yaku'
 import styles from '../YakuCatalog.module.css'
 import {
+  getCompactYakuSummary,
   getYakuGroupAnchorId,
-  getOpenValueLabel,
-  getPrimaryValueLabel,
+  getListConditionLabel,
   groupYakus,
 } from '../lib/yakuPresentation'
 
@@ -48,7 +48,7 @@ export function YakuList({ yakus }: YakuListProps) {
             id={getYakuGroupAnchorId(group.label)}
             key={group.label}
           >
-            <h2>{group.label}</h2>
+            <h2 className={styles.listGroupHeading}>{group.label}</h2>
             <div className={styles.groupCards}>
               {group.yakus.map((yaku) => (
                 <article className={styles.listCard} key={yaku.id}>
@@ -59,13 +59,11 @@ export function YakuList({ yakus }: YakuListProps) {
                   >
                     <div className={styles.listCardTitle}>
                       <h3>{yaku.name}</h3>
-                      <span>{getPrimaryValueLabel(yaku)}</span>
+                      <span className={styles.listCardCondition}>
+                        {getListConditionLabel(yaku)}
+                      </span>
                     </div>
-                    <p>{yaku.summary}</p>
-                    <div className={styles.listCardFooter}>
-                      <span>{getOpenValueLabel(yaku)}</span>
-                      <span aria-hidden="true">자세히 보기 →</span>
-                    </div>
+                    <p>{getCompactYakuSummary(yaku)}</p>
                   </Link>
                 </article>
               ))}
