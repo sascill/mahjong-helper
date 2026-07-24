@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import type { Yaku } from '../../../domain/mahjong/yaku'
 import styles from '../YakuCatalog.module.css'
 import {
+  getCompactYakuSummary,
   getYakuGroupAnchorId,
   getOpenValueLabel,
   getPrimaryValueLabel,
@@ -61,7 +62,7 @@ export function YakuList({ yakus }: YakuListProps) {
                       <h3>{yaku.name}</h3>
                       <span>{getPrimaryValueLabel(yaku)}</span>
                     </div>
-                    <p>{yaku.summary}</p>
+                    <p>{getCompactYakuSummary(yaku)}</p>
                     <div className={styles.listCardFooter}>
                       <span>{getOpenValueLabel(yaku)}</span>
                       <span aria-hidden="true">자세히 보기 →</span>

@@ -73,6 +73,25 @@ describe('역 정보 기능', () => {
         }),
       ).toHaveAttribute('href', `/yaku/${yaku.id}`)
     }
+
+    expect(
+      within(catalog).getByText('리치 선언 후 화료'),
+    ).toBeInTheDocument()
+    expect(
+      within(catalog).queryByText(
+        '멘젠 텐파이 상태에서 리치를 선언하고 화료하는 역입니다.',
+      ),
+    ).not.toBeInTheDocument()
+
+    const compactSummaries = within(catalog)
+      .getAllByText((content, element) => element?.tagName === 'P' && content !== '')
+      .map((paragraph) => paragraph.textContent ?? '')
+
+    expect(compactSummaries).toHaveLength(YAKUS.length)
+    for (const compactSummary of compactSummaries) {
+      expect(compactSummary.length).toBeLessThanOrEqual(18)
+      expect(compactSummary).not.toMatch(/입니다\.?$/)
+    }
   })
 
   it('멘젠 전용 역의 상세 조건과 완성 예시를 표시한다', () => {
