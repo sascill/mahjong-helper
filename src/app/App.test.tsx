@@ -216,6 +216,26 @@ describe('애플리케이션 진입점', () => {
     expect(screen.getByText('멘젠 필수')).toBeInTheDocument()
   })
 
+  it('역 상세의 공통 헤더에서 역 목록으로 이동할 수 있다', () => {
+    render(
+      <MemoryRouter initialEntries={['/yaku/chiitoitsu']}>
+        <App />
+      </MemoryRouter>,
+    )
+
+    const header = screen.getByRole('banner', {
+      name: '애플리케이션 헤더',
+    })
+    const detail = screen.getByRole('main')
+
+    expect(
+      within(header).getByRole('link', { name: '역 목록으로' }),
+    ).toHaveAttribute('href', '/yaku')
+    expect(
+      within(detail).queryByRole('link', { name: /역 목록으로/ }),
+    ).not.toBeInTheDocument()
+  })
+
   it('존재하지 않는 역 ID는 역 목록으로 이동한다', () => {
     render(
       <MemoryRouter initialEntries={['/yaku/not-found']}>
