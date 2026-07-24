@@ -63,7 +63,7 @@
 - 스펙 경로: `src/features/hand-analysis/Spec.md`
 - 구현 경로: `src/features/hand-analysis/`
 
-### 역 도감
+### 역 정보
 
 역 목록과 상세 정보를 탐색하는 기능이다.
 

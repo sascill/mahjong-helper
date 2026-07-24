@@ -61,7 +61,7 @@ const completeHandInput = (tileLabels: string[]) => {
 }
 
 describe('애플리케이션 진입점', () => {
-  it('루트 경로에서 역 도감으로 이동한다', () => {
+  it('루트 경로에서 역 정보로 이동한다', () => {
     render(
       <MemoryRouter>
         <App />
@@ -69,7 +69,7 @@ describe('애플리케이션 진입점', () => {
     )
 
     expect(
-      screen.getByRole('heading', { name: '역 도감', level: 1 }),
+      screen.getByRole('heading', { name: '역 정보', level: 1 }),
     ).toBeInTheDocument()
   })
 
@@ -225,7 +225,7 @@ describe('애플리케이션 진입점', () => {
     )
 
     expect(
-      screen.getByRole('heading', { name: '역 도감', level: 1 }),
+      screen.getByRole('heading', { name: '역 정보', level: 1 }),
     ).toBeInTheDocument()
 
     fireEvent.click(
@@ -266,7 +266,7 @@ describe('애플리케이션 진입점', () => {
     )
 
     expect(
-      screen.getByRole('heading', { name: '역 도감', level: 1 }),
+      screen.getByRole('heading', { name: '역 정보', level: 1 }),
     ).toBeInTheDocument()
   })
 })
