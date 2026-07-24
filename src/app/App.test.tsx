@@ -95,8 +95,8 @@ describe('애플리케이션 진입점', () => {
       within(navigation).getByRole('link', { name: '패' }),
     ).toHaveAttribute('href', '/tiles')
     expect(
-      within(navigation).queryByRole('link', { name: '룰' }),
-    ).not.toBeInTheDocument()
+      within(navigation).getByRole('link', { name: '용어' }),
+    ).toHaveAttribute('href', '/terms')
     expect(
       within(navigation).queryByRole('link', { name: '손패' }),
     ).not.toBeInTheDocument()
@@ -119,7 +119,21 @@ describe('애플리케이션 진입점', () => {
     expect(screen.getByText('백')).toBeInTheDocument()
   })
 
-  it('룰 정보 경로는 역 정보로 이동한다', () => {
+  it('용어 화면을 표시한다', () => {
+    render(
+      <MemoryRouter initialEntries={['/terms']}>
+        <App />
+      </MemoryRouter>,
+    )
+
+    expect(
+      screen.getByRole('heading', { name: '용어', level: 1 }),
+    ).toBeInTheDocument()
+    expect(screen.getByText('멘젠')).toBeInTheDocument()
+    expect(screen.getByText('도라')).toBeInTheDocument()
+  })
+
+  it('룰 정보 경로는 용어 화면으로 이동한다', () => {
     render(
       <MemoryRouter initialEntries={['/rules']}>
         <App />
@@ -127,7 +141,7 @@ describe('애플리케이션 진입점', () => {
     )
 
     expect(
-      screen.getByRole('heading', { name: '역 정보', level: 1 }),
+      screen.getByRole('heading', { name: '용어', level: 1 }),
     ).toBeInTheDocument()
     expect(
       screen.queryByRole('heading', { name: '룰 정보', level: 1 }),

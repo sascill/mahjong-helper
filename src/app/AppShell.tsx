@@ -79,6 +79,15 @@ function AppShell({ children }: PropsWithChildren) {
             </span>
             패
           </NavLink>
+          <NavLink
+            className={({ isActive }) => getNavigationClassName(isActive)}
+            to="/terms"
+          >
+            <span className={styles.navigationIcon} aria-hidden="true">
+              ⓘ
+            </span>
+            용어
+          </NavLink>
         </div>
       </nav>
     </div>

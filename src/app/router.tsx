@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router'
 import HandSelectPage from '../pages/hand-select/HandSelectPage'
 import RecommendationsPage from '../pages/recommendations/RecommendationsPage'
+import TermReferencePage from '../pages/term-reference/TermReferencePage'
 import TileReferencePage from '../pages/tile-reference/TileReferencePage'
 import YakuDetailPage from '../pages/yaku-detail/YakuDetailPage'
 import YakuListPage from '../pages/yaku-list/YakuListPage'
@@ -14,6 +15,8 @@ function AppRouter() {
       <Route path="/yaku" element={<YakuListPage />} />
       <Route path="/yaku/:yakuId" element={<YakuDetailPage />} />
       <Route path="/tiles" element={<TileReferencePage />} />
+      <Route path="/terms" element={<TermReferencePage />} />
+      <Route path="/rules" element={<Navigate to="/terms" replace />} />
       <Route path="*" element={<Navigate to="/yaku" replace />} />
     </Routes>
   )
