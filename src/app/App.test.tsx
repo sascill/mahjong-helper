@@ -159,9 +159,18 @@ describe('애플리케이션 진입점', () => {
       screen.getByRole('heading', { name: '탕야오', level: 1 }),
     ).toBeInTheDocument()
     expect(
+      screen.getByRole('link', { name: '추천 결과로' }),
+    ).toHaveAttribute('href', '/recommendations')
+    expect(
       screen.getByText(
         '1·9·자패 없이 숫자패 2~8만으로 완성하는 역입니다.',
       ),
+    ).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('link', { name: '추천 결과로' }))
+
+    expect(
+      screen.getByRole('heading', { name: '노려볼 만한 역' }),
     ).toBeInTheDocument()
   })
 
