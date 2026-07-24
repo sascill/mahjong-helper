@@ -1,7 +1,7 @@
 .tile {
   display: inline-grid;
   width: 38px;
-  aspect-ratio: 40 / 59;
+  aspect-ratio: 41 / 72;
   filter: drop-shadow(0 2px 0 #c8cec9);
   line-height: 1;
   place-items: center;
