@@ -35,7 +35,7 @@ describe('MahjongTile', () => {
       const tilePath = resolve(`public/tiles/${tile.id}.png`)
 
       expect(existsSync(tilePath)).toBe(true)
-      expect(readPngSize(tilePath)).toEqual({ width: 41, height: 72 })
+      expect(readPngSize(tilePath)).toEqual({ width: 41, height: 59 })
     }
   })
 })
