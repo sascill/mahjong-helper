@@ -1,15 +1,12 @@
-import type { PropsWithChildren } from 'react'
-import { Link, NavLink } from 'react-router'
+import type { PropsWithChildren } from "react";
+import { Link, NavLink } from "react-router";
 
-import styles from './AppShell.module.css'
+import styles from "./AppShell.module.css";
 
 function getNavigationClassName(isActive: boolean) {
-  return [
-    styles.navigationLink,
-    isActive ? styles.navigationLinkActive : '',
-  ]
+  return [styles.navigationLink, isActive ? styles.navigationLinkActive : ""]
     .filter(Boolean)
-    .join(' ')
+    .join(" ");
 }
 
 function AppShell({ children }: PropsWithChildren) {
@@ -17,15 +14,8 @@ function AppShell({ children }: PropsWithChildren) {
     <div className={styles.shell}>
       <header className={styles.header}>
         <div className={styles.headerInner}>
-          <Link
-            className={styles.brand}
-            to="/"
-            aria-label="Mahjong Helper 홈"
-          >
-            <span className={styles.brandMark} aria-hidden="true">
-              🀄
-            </span>
-            Mahjong Helper
+          <Link className={styles.brand} to="/" aria-label="Mahjong Helper 홈">
+            Helper
           </Link>
         </div>
       </header>
@@ -35,9 +25,7 @@ function AppShell({ children }: PropsWithChildren) {
       <nav className={styles.navigation} aria-label="주요 메뉴">
         <div className={styles.navigationInner}>
           <NavLink
-            className={({ isActive }) =>
-              getNavigationClassName(isActive)
-            }
+            className={({ isActive }) => getNavigationClassName(isActive)}
             end
             to="/"
           >
@@ -47,9 +35,7 @@ function AppShell({ children }: PropsWithChildren) {
             홈
           </NavLink>
           <NavLink
-            className={({ isActive }) =>
-              getNavigationClassName(isActive)
-            }
+            className={({ isActive }) => getNavigationClassName(isActive)}
             to="/hand"
           >
             <span className={styles.navigationIcon} aria-hidden="true">
@@ -58,9 +44,7 @@ function AppShell({ children }: PropsWithChildren) {
             손패
           </NavLink>
           <NavLink
-            className={({ isActive }) =>
-              getNavigationClassName(isActive)
-            }
+            className={({ isActive }) => getNavigationClassName(isActive)}
             to="/yaku"
           >
             <span className={styles.navigationIcon} aria-hidden="true">
@@ -71,7 +55,7 @@ function AppShell({ children }: PropsWithChildren) {
         </div>
       </nav>
     </div>
-  )
+  );
 }
 
-export default AppShell
+export default AppShell;
