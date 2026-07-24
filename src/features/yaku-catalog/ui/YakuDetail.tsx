@@ -14,17 +14,19 @@ export function YakuDetail({ yaku }: YakuDetailProps) {
     <>
       <header className={styles.detailHeader}>
         <p className={styles.eyebrow}>역 상세</p>
-        <h1>{yaku.name}</h1>
-        <p className={styles.description}>{yaku.summary}</p>
-        <div
-          className={styles.detailMeta}
-          role="group"
-          aria-label="판수와 울기 조건"
-        >
-          {valueLabels.map((label) => (
-            <span key={label}>{label}</span>
-          ))}
+        <div className={styles.detailTitleRow}>
+          <h1>{yaku.name}</h1>
+          <div
+            className={styles.detailMeta}
+            role="group"
+            aria-label="판수와 울기 조건"
+          >
+            {valueLabels.map((label) => (
+              <span key={label}>{label}</span>
+            ))}
+          </div>
         </div>
+        <p className={styles.description}>{yaku.summary}</p>
       </header>
 
       <section className={styles.infoCard} aria-labelledby="requirements-title">

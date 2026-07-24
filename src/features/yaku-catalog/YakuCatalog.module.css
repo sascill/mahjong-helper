@@ -26,8 +26,17 @@
   letter-spacing: 0.1em;
 }
 
+.detailTitleRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
 .header h1,
 .detailHeader h1 {
+  min-width: 0;
   margin: 0;
   color: var(--color-primary-strong);
   font-size: clamp(1.75rem, 8vw, 2.5rem);
@@ -45,7 +54,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
-  margin-top: var(--space-4);
+  justify-content: flex-end;
+  padding-top: var(--space-1);
 }
 
 .detailMeta span {
