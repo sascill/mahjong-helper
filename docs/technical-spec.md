@@ -35,7 +35,6 @@ src/
 │  ├─ hand-select/
 │  ├─ recommendations/
 │  ├─ tile-reference/
-│  ├─ rule-reference/
 │  ├─ yaku-list/
 │  └─ yaku-detail/
 ├─ features/
@@ -49,15 +48,15 @@ src/
 │  │  └─ Spec.md
 │  ├─ yaku-catalog/
 │  │  └─ Spec.md
-│  ├─ tile-reference/
-│  │  └─ Spec.md
-│  └─ rule-reference/
+│  └─ tile-reference/
 │     └─ Spec.md
 ├─ domain/
 │  └─ mahjong/
 │     ├─ hand/
 │     │  └─ Spec.md
 │     ├─ yaku/
+│     │  └─ Spec.md
+│     ├─ glossary/
 │     │  └─ Spec.md
 │     └─ recommendation/
 │        └─ Spec.md
@@ -206,9 +205,6 @@ features
 
 /tiles
 → 패 읽는 법
-
-/rules
-→ 룰 정보
 ```
 
 추천 결과 없이 `/recommendations`에 직접 접근하면 `/hand`로 이동한다.

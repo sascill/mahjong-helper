@@ -79,15 +79,6 @@ function AppShell({ children }: PropsWithChildren) {
             </span>
             패
           </NavLink>
-          <NavLink
-            className={({ isActive }) => getNavigationClassName(isActive)}
-            to="/rules"
-          >
-            <span className={styles.navigationIcon} aria-hidden="true">
-              ※
-            </span>
-            룰
-          </NavLink>
         </div>
       </nav>
     </div>
