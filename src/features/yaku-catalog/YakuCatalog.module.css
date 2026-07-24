@@ -116,7 +116,8 @@
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: var(--space-2);
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
 }
 
 .listCardTitle h3 {
@@ -127,6 +128,7 @@
 }
 
 .listCardCondition {
+  margin-left: auto;
   color: var(--color-primary-strong);
   font-size: 0.82rem;
   font-weight: 800;
